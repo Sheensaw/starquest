@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://cfjgvvhdxua3n"]
+
+[ext_resource type="PackedScene" uid="uid://b76k0f2r2j4sa" path="res://characters/player/player.glb" id="1_508ok"]
+[ext_resource type="Script" uid="uid://ccblab8h1i6j5" path="res://characters/player/player.gd" id="2_ixbpm"]
+[ext_resource type="Material" uid="uid://byfmjph14hka2" path="res://characters/player/player_mat.tres" id="3_exd8k"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xxgcw"]
+radius = 0.360606
+height = 2.01987
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_508ok"]
+radius = 0.879149
+
+[node name="player" groups=["player"] instance=ExtResource("1_508ok")]
+collision_mask = 14
+script = ExtResource("2_ixbpm")
+
+[node name="GeneralSkeleton" parent="Armature" index="0"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="model" parent="Armature/GeneralSkeleton" index="0"]
+material_override = ExtResource("3_exd8k")
+
+[node name="CharacterCollision" type="CollisionShape3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01019, 0)
+shape = SubResource("CapsuleShape3D_xxgcw")
+
+[node name="InteractionArea" type="Area3D" parent="." index="2"]
+collision_layer = 2
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.954758, 0)
+shape = SubResource("SphereShape3D_508ok")
+debug_color = Color(0.80916, 0.410819, 0.101602, 0.42)

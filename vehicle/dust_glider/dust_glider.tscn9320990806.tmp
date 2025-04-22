@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://bjcl3dcl2m4ww"]
+
+[ext_resource type="PackedScene" uid="uid://xcdyutsv38fd" path="res://vehicle/dust_glider/dust_glider.glb" id="1_7endq"]
+[ext_resource type="Texture2D" uid="uid://1qu3ted8v2xu" path="res://vehicle/dust_glider/textures/texture_diffuse.png" id="2_8orvt"]
+[ext_resource type="Script" uid="uid://dypjuqv2gxkwn" path="res://vehicle/dust_glider/dust_glider.gd" id="2_jiu6d"]
+[ext_resource type="Texture2D" uid="uid://c55kkaytfjejb" path="res://vehicle/dust_glider/textures/texture_metallic.png" id="3_jiu6d"]
+[ext_resource type="Texture2D" uid="uid://fncotqgc6iso" path="res://vehicle/dust_glider/textures/texture_normal.png" id="4_ptbg8"]
+[ext_resource type="Texture2D" uid="uid://dy11jkilbdhr6" path="res://vehicle/dust_glider/textures/texture_roughness.png" id="5_3k7wa"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8orvt"]
+albedo_texture = ExtResource("2_8orvt")
+metallic = 1.0
+metallic_texture = ExtResource("3_jiu6d")
+roughness_texture = ExtResource("5_3k7wa")
+normal_enabled = true
+normal_texture = ExtResource("4_ptbg8")
+clearcoat_enabled = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7endq"]
+radius = 1.21195
+height = 3.92504
+
+[node name="dust_glider" instance=ExtResource("1_7endq")]
+script = ExtResource("2_jiu6d")
+
+[node name="model_001" parent="." index="0"]
+material_override = SubResource("StandardMaterial3D_8orvt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.0616677, 0)
+shape = SubResource("CapsuleShape3D_7endq")
+
+[node name="RayCast3D" type="RayCast3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.840675, -0.450127, 1.24496)
+target_position = Vector3(1, -1, 1)
+collision_mask = 8
+
+[node name="RayCast3D2" type="RayCast3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.841, -0.45, 1.245)
+target_position = Vector3(-1, -1, 1)
+collision_mask = 8
+
+[node name="RayCast3D3" type="RayCast3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.841, -0.45, -1.08807)
+target_position = Vector3(-1, -1, -1)
+collision_mask = 8
+
+[node name="RayCast3D4" type="RayCast3D" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.841, -0.45, -1.088)
+target_position = Vector3(1, -1, -1)
+collision_mask = 8
