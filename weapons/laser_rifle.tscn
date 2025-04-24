@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://dnx526w5xl8q5"]
+
+[ext_resource type="PackedScene" uid="uid://6dm7xpl2jjfi" path="res://weapons/laser_rifle.glb" id="1_gt750"]
+
+[node name="laser_rifle" instance=ExtResource("1_gt750")]

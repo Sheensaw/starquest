@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://boi7c5isoetpy"]
+
+[ext_resource type="Script" uid="uid://c0et2xheyrv8c" path="res://projectiles/laser_projectile.gd" id="1_c7er8"]
+[ext_resource type="Shader" uid="uid://vf5lxttt553d" path="res://projectiles/laser_projectile.gdshader" id="1_vyb4r"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c7er8"]
+render_priority = 0
+shader = ExtResource("1_vyb4r")
+shader_parameter/core_color = Vector4(1, 1, 1, 1)
+shader_parameter/glow_color = Vector4(1, 0, 0, 1)
+shader_parameter/intensity = 2.0
+shader_parameter/core_width = 0.2
+shader_parameter/glow_width = 0.4
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_l82qx"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l82qx"]
+radius = 0.0390581
+height = 0.434486
+
+[node name="LaserProjectile" type="RigidBody3D"]
+collision_mask = 8
+script = ExtResource("1_c7er8")
+
+[node name="LaserMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0781498, -1.36242e-08, -1.47821e-16, 0, -1.36242e-08, 0.0773655, -3.41604e-09, -0.311685, -3.38175e-09, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_c7er8")
+cast_shadow = 0
+mesh = SubResource("CapsuleMesh_l82qx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(2.68451e-15, -6.14145e-08, 1.405, -1.405, -6.14145e-08, 0, 6.14145e-08, -1.405, -6.14145e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_l82qx")

@@ -1,6 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://gc5wfokft4f2"]
+[gd_scene load_steps=3 format=3 uid="uid://gc5wfokft4f2"]
 
 [ext_resource type="Script" uid="uid://d5ks231hq3xg" path="res://game_manager/game_manager.gd" id="1_ong7i"]
+[ext_resource type="Texture2D" uid="uid://d0wq8v4bvjq54" path="res://HUD/textures/target.png" id="2_mx6ys"]
 
 [node name="GameManager" type="Node"]
 script = ExtResource("1_ong7i")
+
+[node name="TargetSprite" type="Sprite3D" parent="."]
+transform = Transform3D(2.25, 0, 0, 0, -9.83506e-08, 2.25, 0, -2.25, -9.83506e-08, 0, 0, 0)
+texture = ExtResource("2_mx6ys")
+
+[node name="GroundRay" type="RayCast3D" parent="."]
+target_position = Vector3(0, -10, 0)
+collision_mask = 8

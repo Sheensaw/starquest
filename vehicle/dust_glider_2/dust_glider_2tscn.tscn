@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://daj7sp3j5qpg1"]
+
+[ext_resource type="PackedScene" uid="uid://deb28se7xvd0v" path="res://vehicle/dust_glider_2/base_basic_pbr.glb" id="1_5jfgq"]
+[ext_resource type="Script" uid="uid://cvp4xur5wl52m" path="res://vehicle/dust_glider_2/dust_glider_2_tscn.gd" id="2_xfmmb"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xfmmb"]
+radius = 1.31799
+height = 3.63598
+
+[node name="dust_glider_2" groups=["interactive", "vehicles"] instance=ExtResource("1_5jfgq")]
+mass = 1000.0
+script = ExtResource("2_xfmmb")
+
+[node name="model" parent="." index="0"]
+transform = Transform3D(1.80922, 0, 0, 0, 0, -1.80922, 0, 1.80922, 0, 0, -0.985921, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.0616677, -0.116436)
+shape = SubResource("CapsuleShape3D_xfmmb")
+
+[node name="RayCastFL" type="RayCast3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.840675, -0.450127, 1.24496)
+target_position = Vector3(1, -5, 1)
+collision_mask = 4
+
+[node name="RayCastFR" type="RayCast3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.841, -0.45, 1.245)
+target_position = Vector3(-1, -5, 1)
+collision_mask = 4
+
+[node name="RayCastBR" type="RayCast3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.841, -0.45, -1.08807)
+target_position = Vector3(-1, -5, -1)
+collision_mask = 4
+
+[node name="RayCastBL" type="RayCast3D" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.841, -0.45, -1.088)
+target_position = Vector3(1, -5, -1)
+collision_mask = 4
