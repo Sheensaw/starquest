@@ -1,10 +1,9 @@
-[gd_scene load_steps=69 format=3 uid="uid://cfjgvvhdxua3n"]
+[gd_scene load_steps=68 format=3 uid="uid://cfjgvvhdxua3n"]
 
 [ext_resource type="PackedScene" uid="uid://b76k0f2r2j4sa" path="res://characters/player/player.glb" id="1_508ok"]
 [ext_resource type="Script" uid="uid://ccblab8h1i6j5" path="res://characters/player/player.gd" id="2_ixbpm"]
 [ext_resource type="Material" uid="uid://byfmjph14hka2" path="res://characters/player/player_mat.tres" id="3_exd8k"]
 [ext_resource type="PackedScene" uid="uid://dnx526w5xl8q5" path="res://weapons/laser_rifle.tscn" id="4_5dc8e"]
-[ext_resource type="PackedScene" uid="uid://okx6ak5b0n1c" path="res://HUD/HUD_player.tscn" id="5_ixbpm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xxgcw"]
 radius = 0.360606
@@ -12477,7 +12476,8 @@ states/Strafe/position = Vector2(526, 102)
 transitions = ["Start", "Normal", SubResource("AnimationNodeStateMachineTransition_icpky"), "Normal", "Strafe", SubResource("AnimationNodeStateMachineTransition_58jvb"), "Strafe", "Normal", SubResource("AnimationNodeStateMachineTransition_5dc8e")]
 graph_offset = Vector2(57, 37)
 
-[sub_resource type="LabelSettings" id="LabelSettings_c6leb"]
+[sub_resource type="LabelSettings" id="LabelSettings_5dc8e"]
+font_size = 35
 
 [node name="player" groups=["player"] instance=ExtResource("1_508ok")]
 collision_mask = 14
@@ -12489,25 +12489,25 @@ cone_angle = 20.0
 
 [node name="GeneralSkeleton" parent="Armature" index="0"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-bones/0/position = Vector3(-0.00633642, 1.04681, 0.0127545)
-bones/0/rotation = Quaternion(0.0768401, -0.0164228, 0.00392704, 0.9969)
-bones/1/rotation = Quaternion(0.0143728, 0.136363, -0.0175352, 0.990399)
-bones/2/rotation = Quaternion(0.00990759, 0.0180066, 0.00770023, 0.999759)
-bones/3/rotation = Quaternion(0.00942643, 0.0180634, 0.0077348, 0.999763)
-bones/4/rotation = Quaternion(0.0470141, -0.0297857, -0.026601, 0.998096)
-bones/5/rotation = Quaternion(-0.150822, -0.112978, 0.0167636, 0.981941)
+bones/0/position = Vector3(-0.00597389, 1.02161, -0.000302946)
+bones/0/rotation = Quaternion(0.0936892, 0.0601316, 0.00977745, 0.993736)
+bones/1/rotation = Quaternion(-0.00532944, -0.125584, -0.0507333, 0.990771)
+bones/2/rotation = Quaternion(0.0238046, -0.0173297, 0.0300401, 0.999115)
+bones/3/rotation = Quaternion(0.0368736, -0.0172165, 0.0289033, 0.998754)
+bones/4/rotation = Quaternion(0.0262854, 0.00801771, -0.00457712, 0.999612)
+bones/5/rotation = Quaternion(-0.163089, 0.0695768, -0.0229606, 0.983887)
 bones/7/rotation = Quaternion(0.470129, 0.507731, 0.557356, -0.458849)
 bones/8/rotation = Quaternion(0.19745, 0.977047, -0.0762887, -0.0239229)
 bones/9/rotation = Quaternion(0.380474, -0.870158, -0.138815, 0.280705)
 bones/10/rotation = Quaternion(-0.0335586, 0.57042, -0.234265, 0.786521)
 bones/11/rotation = Quaternion(-0.124822, 0.796935, 0.488907, 0.33209)
 bones/12/rotation = Quaternion(0.184836, 0.164424, -0.0402285, 0.968082)
-bones/13/rotation = Quaternion(-0.0627532, -0.0670982, -0.00838811, 0.995736)
+bones/13/rotation = Quaternion(-0.058188, -0.0623662, -0.00590259, 0.996338)
 bones/14/position = Vector3(-0.0131576, 0.0145769, -0.0153795)
 bones/14/rotation = Quaternion(0.0362489, -0.729897, 0.459332, 0.504925)
 bones/14/scale = Vector3(1.00045, 1.00045, 1.00032)
 bones/15/rotation = Quaternion(-0.0370438, 0.0787743, 0.352441, 0.931777)
-bones/16/rotation = Quaternion(-0.218452, -0.00460682, -0.0998704, 0.970713)
+bones/16/rotation = Quaternion(-0.212986, -0.00124681, -0.0974994, 0.972178)
 bones/17/rotation = Quaternion(0.569702, 0.328591, 0.289255, 0.695557)
 bones/18/position = Vector3(-0.0165606, -0.00882802, 0.0404577)
 bones/18/rotation = Quaternion(0.651564, 0.1469, 0.359339, 0.651736)
@@ -12515,30 +12515,30 @@ bones/19/rotation = Quaternion(0.443323, -0.542958, -0.496797, -0.511717)
 bones/20/rotation = Quaternion(-0.122946, 0.940742, -0.0536792, 0.311459)
 bones/21/rotation = Quaternion(0.321078, 0.902741, -0.229933, 0.170583)
 bones/22/rotation = Quaternion(0.136105, -0.626684, 0.115281, 0.758586)
-bones/23/rotation = Quaternion(-0.231106, -0.684484, -0.310428, 0.617824)
-bones/24/rotation = Quaternion(0.164583, -0.119365, 0.0279343, 0.978716)
-bones/25/rotation = Quaternion(-0.0628854, 0.0251378, -0.0167082, 0.997564)
+bones/23/rotation = Quaternion(-0.191902, -0.684906, -0.333842, 0.618569)
+bones/24/rotation = Quaternion(0.21395, -0.160028, 0.000440643, 0.963648)
+bones/25/rotation = Quaternion(-0.0387876, 0.00288525, -0.0305298, 0.998777)
 bones/26/position = Vector3(0.0125216, 0.0177432, -0.0176802)
 bones/26/rotation = Quaternion(0.0150879, 0.751699, -0.425708, 0.503481)
-bones/27/rotation = Quaternion(-0.0127061, 0.0903104, -0.0494906, 0.994602)
+bones/27/rotation = Quaternion(-0.0135854, 0.0908384, -0.0491627, 0.994559)
 bones/28/rotation = Quaternion(0.0261425, -0.131528, 0.0315865, 0.990464)
 bones/29/rotation = Quaternion(0.469885, -0.408696, -0.162018, 0.765458)
 bones/30/position = Vector3(0.0169828, -0.00386909, 0.0373394)
 bones/30/rotation = Quaternion(0.621346, -0.124438, -0.351313, 0.68922)
-bones/31/rotation = Quaternion(-0.0435931, 0.438419, 0.897712, -0.00122419)
-bones/32/rotation = Quaternion(0.0116621, 0.803026, -0.57602, 0.152359)
-bones/33/rotation = Quaternion(0.0775441, 0.722119, -0.683212, -0.07585)
-bones/34/rotation = Quaternion(-4.88924e-07, 1, 0.000462864, 1.97093e-06)
-bones/36/rotation = Quaternion(-0.0618263, -0.154761, 0.98475, -0.0499429)
-bones/37/rotation = Quaternion(0.0413433, 0.987163, -0.14421, 0.0547959)
-bones/38/rotation = Quaternion(0.0556374, 0.863237, -0.49561, -0.0780912)
-bones/39/rotation = Quaternion(6.64603e-07, 0.999584, 0.0288272, -4.08218e-07)
+bones/31/rotation = Quaternion(0.0829134, -0.0614328, 0.994439, 0.0210208)
+bones/32/rotation = Quaternion(0.0422275, 0.981161, -0.187744, -0.0170929)
+bones/33/rotation = Quaternion(0.0653996, 0.741083, -0.66377, -0.0769928)
+bones/34/rotation = Quaternion(0.000363384, 0.97131, 0.236042, 0.0290065)
+bones/36/rotation = Quaternion(0.0405605, 0.468618, 0.882155, 0.0235573)
+bones/37/rotation = Quaternion(0.0299405, 0.64119, -0.756017, -0.128127)
+bones/38/rotation = Quaternion(-0.013694, 0.720805, -0.693002, -0.000917289)
+bones/39/rotation = Quaternion(6.64642e-07, 1, 0.000248161, -3.42995e-07)
 
 [node name="model" parent="Armature/GeneralSkeleton" index="0"]
 material_override = ExtResource("3_exd8k")
 
 [node name="WeaponSocket" type="BoneAttachment3D" parent="Armature/GeneralSkeleton" index="1"]
-transform = Transform3D(0.635255, 0.106806, 0.764881, 0.64122, -0.624946, -0.445286, 0.430451, 0.773327, -0.465486, -0.224122, 1.203, 0.240856)
+transform = Transform3D(0.379899, -0.323246, 0.866712, 0.56346, -0.662211, -0.493953, 0.733614, 0.67601, -0.069437, -0.286896, 1.18928, 0.0878424)
 bone_name = "RightHand"
 bone_idx = 22
 
@@ -12579,66 +12579,61 @@ parameters/Strafe/blend_position = Vector2(-0.0072841, 0.560538)
 [node name="ProjectileLocation" type="Marker3D" parent="." index="5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.160774, 1.43327, -1.5003)
 
-[node name="HudPlayer" parent="." index="6" instance=ExtResource("5_ixbpm")]
+[node name="PlayerHUD" type="CanvasLayer" parent="." index="6"]
+follow_viewport_enabled = true
 
-[node name="MarginContainer2" type="MarginContainer" parent="HudPlayer" index="5"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ScoreLabel2" type="Label" parent="HudPlayer" index="6"]
+[node name="Healthbar" type="ProgressBar" parent="PlayerHUD" index="0"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 446.0
-offset_top = -299.0
-offset_right = 489.0
-offset_bottom = -250.0
+offset_left = -359.0
+offset_top = 488.0
+offset_right = 31.0
+offset_bottom = 520.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Score"
+scale = Vector2(1.84, 1.84)
+size_flags_vertical = 4
 
-[node name="ScoreValue2" type="Label" parent="HudPlayer" index="7"]
+[node name="HealthLabel" type="Label" parent="PlayerHUD" index="1"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 496.5
-offset_top = -299.0
-offset_right = 539.5
-offset_bottom = -250.0
+offset_left = -56.0
+offset_top = 414.0
+offset_right = 56.0
+offset_bottom = 463.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Score"
-
-[node name="HealthLabel2" type="Label" parent="HudPlayer" index="8"]
-layout_direction = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -517.0
-offset_top = 213.0
-offset_right = -465.0
-offset_bottom = 236.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
 text = "Health"
-label_settings = SubResource("LabelSettings_c6leb")
-horizontal_alignment = 1
-vertical_alignment = 1
+label_settings = SubResource("LabelSettings_5dc8e")
 
-[node name="ProgressBar2" type="ProgressBar" parent="HudPlayer" index="9"]
-custom_minimum_size = Vector2(69.265, 0)
-offset_left = 56.0
-offset_top = 571.0
-offset_right = 180.0
-offset_bottom = 598.0
-size_flags_horizontal = 4
+[node name="ScoreLabel" type="Label" parent="PlayerHUD" index="2"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -195.0
+offset_top = 20.0
+offset_right = -102.0
+offset_bottom = 69.0
+grow_horizontal = 0
+text = "Score"
+label_settings = SubResource("LabelSettings_5dc8e")
+horizontal_alignment = 1
+
+[node name="ScoreValue" type="Label" parent="PlayerHUD" index="3"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -78.0
+offset_top = 20.0
+offset_right = -26.0
+offset_bottom = 43.0
+grow_horizontal = 0
+text = "00"
+label_settings = SubResource("LabelSettings_5dc8e")
+horizontal_alignment = 1

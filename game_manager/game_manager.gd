@@ -12,12 +12,8 @@ func _ready() -> void:
 	# Vérifier les références et afficher leur état
 	if not player:
 		push_error("GameManager.gd : aucun joueur trouvé dans le groupe 'player'.")
-	else:
-		print("GameManager.gd : Joueur trouvé : ", player.name)
 	if not camera_rig:
 		push_error("GameManager.gd : aucun camera_rig trouvé dans le groupe 'camera_rig'.")
-	else:
-		print("GameManager.gd : Camera Rig trouvé : ", camera_rig.name)
 	if not target_sprite:
 		push_error("GameManager.gd : aucun TargetSprite trouvé dans la scène après recherche.")
 	else:
@@ -30,33 +26,16 @@ func _ready() -> void:
 			image.fill(Color.WHITE)  # Remplir avec du blanc
 			default_texture.create_from_image(image)
 			target_sprite.texture = default_texture
-			print("GameManager.gd : Texture par défaut assignée à TargetSprite")
-		else:
-			print("GameManager.gd : TargetSprite a une texture : ", target_sprite.texture.resource_path)
 		# Cacher le sprite par défaut
 		target_sprite.visible = false
 	if not ground_ray:
 		push_error("GameManager.gd : aucun GroundRay trouvé dans la scène.")
-	else:
-		print("GameManager.gd : GroundRay trouvé : ", ground_ray.name)
 	if player and camera_rig:
 		camera_rig.set_follow_target(player)
-	else:
-		print("GameManager.gd : Impossible de connecter camera_rig au joueur - player : ", player, ", camera_rig : ", camera_rig)
 
 func _physics_process(delta: float) -> void:
-	# Confirmer que _physics_process est appelé
-	print("GameManager.gd : _physics_process appelé")
-	
-	# Vérifier pourquoi _physics_process pourrait ne pas s'exécuter
-	if not player:
-		print("GameManager.gd : Player est null")
-		return
-	if not target_sprite:
-		print("GameManager.gd : TargetSprite est null")
-		return
-	if not ground_ray:
-		print("GameManager.gd : GroundRay est null")
+	# Vérifier si les nœuds nécessaires existent
+	if not player or not target_sprite or not ground_ray:
 		return
 	
 	# Gérer la cible (Sprite3D)
@@ -67,7 +46,6 @@ func find_target_sprite() -> Sprite3D:
 	# Essayer d'abord le chemin spécifique
 	var sprite = get_node_or_null("NECROFROST/TargetSprite")
 	if sprite and sprite is Sprite3D:
-		print("GameManager.gd : TargetSprite trouvé via chemin direct : NECROFROST/TargetSprite")
 		return sprite
 	
 	# Si le chemin direct échoue, chercher dans toute la scène
@@ -82,10 +60,6 @@ func find_target_sprite() -> Sprite3D:
 		for child in node.get_children():
 			nodes_to_check.append(child)
 	
-	if found_sprite:
-		print("GameManager.gd : TargetSprite trouvé via recherche dans la scène : ", found_sprite.get_path())
-	else:
-		print("GameManager.gd : TargetSprite non trouvé dans la scène après recherche exhaustive")
 	return found_sprite
 
 func update_target_sprite(delta: float) -> void:
@@ -100,10 +74,8 @@ func update_target_sprite(delta: float) -> void:
 		# Déterminer la couleur du sprite en fonction du groupe "enemies"
 		if detected_target.is_in_group("enemies"):
 			target_sprite.modulate = Color(1, 0, 0, 1.0)  # Rouge pour les ennemis
-			print("GameManager.gd : Cible détectée : ", detected_target.name, " (ennemi), couleur rouge")
 		else:
 			target_sprite.modulate = Color(0, 1, 0, 1.0)  # Vert pour les autres aimables
-			print("GameManager.gd : Cible détectée : ", detected_target.name, " (aimable), couleur verte")
 		
 		# Ajuster l'échelle et la taille des pixels pour une taille raisonnable
 		target_sprite.scale = Vector3(1.5, 1.5, 1.5)  # Échelle à 1.5
@@ -112,28 +84,11 @@ func update_target_sprite(delta: float) -> void:
 		# Positionner la cible au niveau du sol sous l'entité
 		position_sprite_on_ground(detected_target)
 		
-		# Vérifier la position du sprite et la position de la caméra
-		var camera = get_viewport().get_camera_3d()
-		if camera:
-			var sprite_screen_pos = camera.unproject_position(target_sprite.global_position)
-			var camera_pos = camera.global_position
-			print("GameManager.gd : Position du TargetSprite : ", target_sprite.global_position, ", Position en écran : ", sprite_screen_pos)
-			print("GameManager.gd : Position de la caméra : ", camera_pos)
-		else:
-			print("GameManager.gd : Aucune caméra principale trouvée")
-		
 		# Faire tourner la cible
 		target_sprite.rotation.y += rotation_speed * delta
 	else:
 		# Cacher la cible
 		target_sprite.visible = false
-		# Lister les entités aimables dans la scène
-		var aimables = get_tree().get_nodes_in_group("aimables")
-		if aimables.is_empty():
-			print("GameManager.gd : Aucune entité dans le groupe 'aimables' détectée dans la scène")
-		else:
-			var aimable_info = aimables.map(func(entity): return entity.name + " (position: " + str(entity.global_position) + ")")
-			print("GameManager.gd : Entités dans le groupe 'aimables' : ", aimable_info)
 
 func adapt_sprite_to_entity_size(entity: Node3D) -> void:
 	var sprite_size: float = 2.0  # Taille par défaut si aucune taille n'est trouvée

@@ -15,10 +15,19 @@ run/main_scene="uid://c7gkpqch6uom1"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
+
 [dialogic]
 
 directories/dch_directory={}
 directories/dtl_directory={}
+
+[display]
+
+window/size/viewport_width=2532
+window/size/viewport_height=1170
 
 [editor_plugins]
 
@@ -99,3 +108,4 @@ dialogic_default_action={
 [rendering]
 
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true

@@ -53,22 +53,36 @@ var can_shoot: bool = true
 var shoot_timer: float = 0.0
 const SHOOT_INTERVAL: float = 0.1  # Intervalle de tir en secondes
 
-# Référence au HUD
-@onready var hud: CanvasLayer = $HUDPlayer  # Référence directe au HUD dans la scène du joueur
+# Références au HUD (directement dans la scène du joueur)
+@onready var hud: CanvasLayer = $PlayerHUD
+@onready var health_bar = $PlayerHUD/Healthbar
+@onready var health_label = $PlayerHUD/HealthLabel
+@onready var score_label = $PlayerHUD/ScoreLabel
+@onready var score_value = $PlayerHUD/ScoreValue
 
 func _ready() -> void:
 	# Initialiser la santé
 	current_health = max_health
-	print("Player.gd : Santé initialisée - current_health : ", current_health, ", max_health : ", max_health)
 	
-	# Vérifier l'initialisation du HUD
-	if hud == null:
-		push_error("Player.gd : HUDPlayer non trouvé dans la scène du joueur.")
-	else:
-		print("Player.gd : HUDPlayer trouvé : ", hud.name)
-		# Initialiser l'affichage du HUD
-		hud.update_score(score)
-		hud.update_health(current_health, max_health)
+	# Vérifier les références au HUD
+	if not hud:
+		push_error("Player.gd : PlayerHUD non trouvé dans la scène du joueur.")
+	if not health_bar:
+		push_error("Player.gd : Healthbar non trouvé dans PlayerHUD.")
+	if not health_label:
+		push_error("Player.gd : HealthLabel non trouvé dans PlayerHUD.")
+	if not score_label:
+		push_error("Player.gd : ScoreLabel non trouvé dans PlayerHUD.")
+	if not score_value:
+		push_error("Player.gd : ScoreValue non trouvé dans PlayerHUD.")
+	
+	# Initialiser l'affichage du HUD
+	if health_bar and health_label and score_label and score_value:
+		health_bar.max_value = max_health
+		health_bar.value = current_health
+		health_label.text = str(int(current_health))
+		score_label.text = "Score:"
+		score_value.text = str(score)
 
 func _physics_process(delta: float) -> void:
 	# Vérifier si le personnage veut effectuer une action (shoot ou takedown)
@@ -191,6 +205,8 @@ func _physics_process(delta: float) -> void:
 func shoot_projectile():
 	var projectile = projectile_scene.instantiate()
 	get_tree().root.add_child(projectile)
+	# Ajouter le projectile au groupe "player_projectiles"
+	projectile.add_to_group("player_projectiles")
 	projectile.global_transform = $ProjectileLocation.global_transform
 	projectile.direction = -global_transform.basis.z.normalized()
 
@@ -258,10 +274,9 @@ func get_detected_target() -> Node3D:
 func take_damage(damage: float) -> void:
 	current_health -= damage
 	current_health = clamp(current_health, 0, max_health)
-	if hud:
-		hud.update_health(current_health, max_health)
-	else:
-		print("Player.gd : HUD est null, impossible de mettre à jour la santé")
+	if health_bar and health_label:
+		health_bar.value = current_health
+		health_label.text = str(int(current_health))
 	if current_health <= 0:
 		die()
 
@@ -272,19 +287,16 @@ func die() -> void:
 # Méthode pour augmenter le score
 func add_score(points: int) -> void:
 	score += points
-	if hud:
-		hud.update_score(score)
-	else:
-		print("Player.gd : HUD est null, impossible de mettre à jour le score")
+	if score_value:
+		score_value.text = str(score)
 
 # Méthode pour récupérer de la vie après un takedown
 func recover_health(amount: float) -> void:
 	current_health += amount
 	current_health = clamp(current_health, 0, max_health)
-	if hud:
-		hud.update_health(current_health, max_health)
-	else:
-		print("Player.gd : HUD est null, impossible de mettre à jour la santé après takedown")
+	if health_bar and health_label:
+		health_bar.value = current_health
+		health_label.text = str(int(current_health))
 
 # Méthodes pour gérer l'entrée/sortie dans une TakedownArea
 func _on_area_entered(area: Area3D) -> void:

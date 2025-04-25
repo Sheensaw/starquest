@@ -19,7 +19,7 @@ radius = 0.0593041
 height = 0.810588
 
 [node name="LaserProjectile" type="Area3D"]
-collision_mask = 8
+collision_layer = 0
 script = ExtResource("1_1lp8l")
 
 [node name="LaserMesh" type="MeshInstance3D" parent="."]

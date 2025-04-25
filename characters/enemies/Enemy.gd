@@ -64,7 +64,7 @@ func _ready() -> void:
 		if stun_sprite is AnimatedSprite2D:
 			stun_sprite.play()  # S'assurer que l'animation est jouée
 			# Réduire la taille du TakedownSprite
-			stun_sprite.scale = Vector2(0.3, 0.3)
+			stun_sprite.scale = Vector2(0.7, 0.7)
 	if not takedown_area:
 		push_error("TakedownArea manquant pour " + name)
 	else:
@@ -81,24 +81,13 @@ func _physics_process(delta: float) -> void:
 		update_ui_position()
 		return
 	
-	# Mettre à jour le timer d'attaque
+	# Mettre à jour le timer d'attaque (mais ne pas appeler attack() ici)
 	if attack_timer > 0:
 		attack_timer -= delta
 	
 	# Trouver une cible (par exemple, le joueur)
 	if not target:
 		target = get_closest_target()
-	
-	# Si une cible est trouvée, agir
-	if target:
-		# Se déplacer vers la cible si hors de portée (implémenté dans les sous-classes)
-		if global_position.distance_to(target.global_position) > attack_range:
-			move_toward_target(delta)
-		else:
-			# Attaquer si dans la portée et que le cooldown est terminé
-			if attack_timer <= 0:
-				attack()
-				attack_timer = attack_cooldown
 	
 	# Gérer le timer d'affichage de la santé
 	if show_health:
@@ -121,7 +110,7 @@ func update_ui_position() -> void:
 	var camera = get_viewport().get_camera_3d()
 	if camera:
 		# Calculer la position 3D au-dessus de l'ennemi
-		var health_position = global_position + Vector3(0, 1.5, 0)  # Hauteur pour le HealthLabel
+		var health_position = global_position + Vector3(0, 2.5, 0)  # Hauteur pour le HealthLabel
 		var takedown_position = global_position + Vector3(0, 2.5, 0)  # Hauteur pour le TakedownSprite
 		# Convertir les positions 3D en positions 2D à l'écran
 		var health_screen_pos = camera.unproject_position(health_position)
@@ -169,21 +158,17 @@ func get_closest_target() -> Node3D:
 	
 	return nearest_target
 
-# Placeholder : Méthode pour le déplacement (à surcharger dans les sous-classes)
-func move_toward_target(delta: float) -> void:
-	pass
-
-# Placeholder : Méthode d'attaque (à surcharger dans les sous-classes)
-func attack() -> void:
-	# Par défaut, inflige des dégâts à la cible
-	if target and target.has_method("take_damage"):
-		target.take_damage(attack_damage)
-
 # Méthode pour recevoir des dégâts
-func take_damage(damage: float) -> void:
+func take_damage(damage: float, source: Node = null) -> void:
 	# Si l'ennemi est étourdi, ignorer les dégâts (seul un takedown peut le tuer)
 	if is_stunned:
 		return
+	
+	# Vérifier la source des dégâts : seuls les projectiles du joueur sont autorisés
+	if source != null:
+		# Vérifier si la source est un projectile du joueur en utilisant le groupe
+		if not source.is_in_group("player_projectiles"):
+			return  # Ignorer les dégâts si la source n'est pas un projectile du joueur
 	
 	# Vérifier si current_health est bien initialisé
 	if current_health == null:
@@ -272,10 +257,18 @@ func perform_takedown(player: Node) -> void:
 	# Ajouter de la vie au joueur
 	if player and player.has_method("recover_health"):
 		player.recover_health(health_recovery_amount)
-		print("Enemy.gd : Takedown effectué, joueur récupère ", health_recovery_amount, " points de vie")
 	
 	# Tuer l'ennemi
 	die()
+
+# Placeholder : Méthode pour le déplacement (à surcharger dans les sous-classes)
+func move_toward_target(delta: float) -> void:
+	pass
+
+# Placeholder : Méthode d'attaque (à surcharger dans les sous-classes)
+func attack() -> void:
+	if target and target.has_method("take_damage"):
+		target.take_damage(attack_damage)
 
 # Placeholder : Propriétés personnalisables pour les enfants
 var rotation_speed: float = 5.0  # Vitesse de rotation pour s'orienter vers la cible

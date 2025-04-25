@@ -11,9 +11,6 @@ var direction: Vector3 = Vector3.FORWARD
 @export var max_damage: float = 20.0  # Dégâts maximum
 var damage: float
 
-# Points attribués au joueur pour chaque ennemi touché
-@export var points_per_hit: int = 5
-
 # Son du tir
 var shoot_sound = preload("res://audio/sfx/laser_shoot.wav")
 
@@ -25,10 +22,8 @@ func _ready() -> void:
 	if not is_connected("body_entered", _on_body_entered):
 		var err = connect("body_entered", _on_body_entered)
 		if err != OK:
-			print("Erreur lors de la connexion du signal body_entered : ", err)
-		else:
-			print("Signal body_entered connecté avec succès pour le projectile")
-	
+			push_error("Erreur lors de la connexion du signal body_entered : ", err)
+
 	# Créer et jouer le son du tir
 	var audio_player = AudioStreamPlayer3D.new()
 	audio_player.stream = shoot_sound
@@ -52,6 +47,5 @@ func _on_body_entered(body: Node) -> void:
 		# Vérifier si le joueur a la méthode take_damage
 		if body.has_method("take_damage"):
 			body.take_damage(damage)
-			print("LaserProjectileEnemy.gd : Joueur touché, dégâts infligés : ", damage)
 	# Supprimer le projectile quand il touche un objet
 	queue_free()

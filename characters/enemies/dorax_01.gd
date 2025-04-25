@@ -13,6 +13,9 @@ const ENEMY_PROJECTILE_SCENE: PackedScene = preload("res://projectiles/enemy_las
 @export var projectile_damage_min: float = 5.0  # Dégâts minimum du projectile
 @export var projectile_damage_max: float = 10.0  # Dégâts maximum du projectile
 
+# Référence au Marker3D pour la position de tir
+@onready var projectile_location: Marker3D = $ProjectileLocation
+
 func _ready() -> void:
 	super._ready()  # Appeler la méthode _ready() de la classe parent (Enemy)
 	# Surcharger les propriétés héritées
@@ -23,7 +26,10 @@ func _ready() -> void:
 	# Assurer que les paramètres du cône de détection sont adaptés
 	vision_radius = max(vision_radius, ranged_attack_range)  # Le cône doit couvrir au moins la portée d'attaque
 	vision_angle = max(vision_angle, 90.0)  # Champ de vision suffisamment large
-	print("RangedEnemy.gd : Initialisé avec portée ", attack_range, ", cooldown ", attack_cooldown)
+	
+	# Vérifier l'initialisation du Marker3D
+	if not projectile_location:
+		push_error("RangedEnemy.gd : ProjectileLocation non trouvé dans la scène de l'ennemi.")
 
 func _physics_process(delta: float) -> void:
 	# Hériter le comportement de base (détection, UI, etc.)
@@ -83,23 +89,25 @@ func attack() -> void:
 	if not target or not target.has_method("take_damage"):
 		return
 	
+	# Vérifier que le Marker3D existe
+	if not projectile_location:
+		return
+	
 	# Instancier un projectile
 	var projectile = ENEMY_PROJECTILE_SCENE.instantiate()
 	get_tree().root.add_child(projectile)
 	
-	# Positionner le projectile à l'origine de l'ennemi
-	projectile.global_position = global_position + Vector3(0, 1.0, 0)  # Légère hauteur pour éviter le sol
+	# Positionner le projectile à l'emplacement du Marker3D
+	projectile.global_transform = projectile_location.global_transform
 	
 	# Définir la direction du projectile vers le joueur
-	var direction_to_target = (target.global_position - projectile.global_position).normalized()
+	var direction_to_target = (target.global_position - projectile_location.global_position).normalized()
 	projectile.direction = direction_to_target
 	
 	# Configurer les propriétés du projectile
 	projectile.speed = projectile_speed
 	projectile.min_damage = projectile_damage_min
 	projectile.max_damage = projectile_damage_max
-	
-	print("RangedEnemy.gd : ", name, " tire un laser vers le joueur")
 
 # Méthode pour trouver le joueur le plus proche (même hors du cône de détection)
 func get_closest_player() -> Node3D:

@@ -137,7 +137,6 @@ script = ExtResource("2_2y867")
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="GeneralSkeleton" parent="Armature" index="0"]
-bones/7/rotation = Quaternion(0.5, 0.5, 0.5, -0.5)
 bones/8/rotation = Quaternion(-0.0137048, 0.999811, 0.00728637, 0.0117163)
 bones/9/rotation = Quaternion(0.0254357, -0.684856, 0.0244135, 0.727825)
 bones/10/rotation = Quaternion(-0.0104559, 0.693425, -0.0197223, 0.720183)
@@ -175,3 +174,6 @@ collision_mask = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TakedownArea" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.08604, 0)
 shape = SubResource("SphereShape3D_m7pjx")
+
+[node name="ProjectileLocation" type="Marker3D" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.160774, 1.43327, -1.5003)
