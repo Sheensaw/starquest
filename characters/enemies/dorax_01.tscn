@@ -1,0 +1,177 @@
+[gd_scene load_steps=34 format=3 uid="uid://btv7lfaahfhn8"]
+
+[ext_resource type="PackedScene" uid="uid://unwypaismtj" path="res://characters/enemies/dorax/dorax_01.glb" id="1_wxjtn"]
+[ext_resource type="Script" uid="uid://i4p5psg6o8p0" path="res://characters/enemies/dorax_01.gd" id="2_2y867"]
+[ext_resource type="Texture2D" uid="uid://ctyorjg7m0hmj" path="res://sprites/takedown/loading_icon00.png" id="3_gix4r"]
+[ext_resource type="Texture2D" uid="uid://b7xhb0hpdb58f" path="res://sprites/takedown/loading_icon01.png" id="4_et4v7"]
+[ext_resource type="Texture2D" uid="uid://djsuh7egp7my6" path="res://sprites/takedown/loading_icon02.png" id="5_yswkp"]
+[ext_resource type="Texture2D" uid="uid://cguuwf2jmtl3t" path="res://sprites/takedown/loading_icon03.png" id="6_u34ob"]
+[ext_resource type="Texture2D" uid="uid://du488pkksrq5n" path="res://sprites/takedown/loading_icon04.png" id="7_uyfjw"]
+[ext_resource type="Texture2D" uid="uid://kuu2sr0dlrt8" path="res://sprites/takedown/loading_icon05.png" id="8_6kav1"]
+[ext_resource type="Texture2D" uid="uid://io3pud2l7u5j" path="res://sprites/takedown/loading_icon06.png" id="9_yabkp"]
+[ext_resource type="Texture2D" uid="uid://bi7yo4p3iwetd" path="res://sprites/takedown/loading_icon07.png" id="10_oynyl"]
+[ext_resource type="Texture2D" uid="uid://cie688apey1da" path="res://sprites/takedown/loading_icon08.png" id="11_nxgp0"]
+[ext_resource type="Texture2D" uid="uid://d4cs8a0c3cccf" path="res://sprites/takedown/loading_icon09.png" id="12_lyyhp"]
+[ext_resource type="Texture2D" uid="uid://bmyk55cxruwbw" path="res://sprites/takedown/loading_icon10.png" id="13_qmw26"]
+[ext_resource type="Texture2D" uid="uid://mv3hb2x65ukg" path="res://sprites/takedown/loading_icon11.png" id="14_iinyt"]
+[ext_resource type="Texture2D" uid="uid://c25eqd4unh358" path="res://sprites/takedown/loading_icon12.png" id="15_efs2p"]
+[ext_resource type="Texture2D" uid="uid://cv3kk12r4qqbc" path="res://sprites/takedown/loading_icon13.png" id="16_3hin8"]
+[ext_resource type="Texture2D" uid="uid://30t8soak35g5" path="res://sprites/takedown/loading_icon14.png" id="17_yy5vy"]
+[ext_resource type="Texture2D" uid="uid://dyd6212grs0l7" path="res://sprites/takedown/loading_icon15.png" id="18_4fgoh"]
+[ext_resource type="Texture2D" uid="uid://bx2mwgsy1xcn" path="res://sprites/takedown/loading_icon16.png" id="19_u5soe"]
+[ext_resource type="Texture2D" uid="uid://dmtyhy3d5u64i" path="res://sprites/takedown/loading_icon17.png" id="20_eu7m3"]
+[ext_resource type="Texture2D" uid="uid://jl7ekr6wxd10" path="res://sprites/takedown/loading_icon18.png" id="21_gm4vx"]
+[ext_resource type="Texture2D" uid="uid://b4158pkgfojqd" path="res://sprites/takedown/loading_icon19.png" id="22_6kb2l"]
+[ext_resource type="Texture2D" uid="uid://bnm7x8gq2w8w2" path="res://sprites/takedown/loading_icon20.png" id="23_w3bf8"]
+[ext_resource type="Texture2D" uid="uid://d06cwccqbd40m" path="res://sprites/takedown/loading_icon21.png" id="24_g6r2a"]
+[ext_resource type="Texture2D" uid="uid://d0olhwd66gaep" path="res://sprites/takedown/loading_icon22.png" id="25_0m1lw"]
+[ext_resource type="Texture2D" uid="uid://34m4mvalhmhh" path="res://sprites/takedown/loading_icon23.png" id="26_8l65q"]
+[ext_resource type="Texture2D" uid="uid://6ddswo3iwakm" path="res://sprites/takedown/loading_icon24.png" id="27_rg540"]
+[ext_resource type="Texture2D" uid="uid://4vuec75gsifo" path="res://sprites/takedown/loading_icon25.png" id="28_5fb86"]
+[ext_resource type="Texture2D" uid="uid://8063t6ciehfp" path="res://sprites/takedown/loading_icon26.png" id="29_u1msp"]
+[ext_resource type="Texture2D" uid="uid://bjo5ghq18osgv" path="res://sprites/takedown/loading_icon27.png" id="30_h2l7v"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2y867"]
+radius = 0.363015
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kf4mq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_gix4r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_et4v7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_yswkp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_u34ob")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_uyfjw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_6kav1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_yabkp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_oynyl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_nxgp0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_lyyhp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_qmw26")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_iinyt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_efs2p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_3hin8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_yy5vy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_4fgoh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_u5soe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_eu7m3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_gm4vx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_6kb2l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_w3bf8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_g6r2a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_0m1lw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_8l65q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_rg540")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_5fb86")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_u1msp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_h2l7v")
+}],
+"loop": true,
+"name": &"default",
+"speed": 30.0
+}]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_m7pjx"]
+radius = 1.06704
+
+[node name="RangedEnemy" instance=ExtResource("1_wxjtn")]
+collision_layer = 8
+script = ExtResource("2_2y867")
+
+[node name="Armature" parent="." index="0"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="GeneralSkeleton" parent="Armature" index="0"]
+bones/7/rotation = Quaternion(0.5, 0.5, 0.5, -0.5)
+bones/8/rotation = Quaternion(-0.0137048, 0.999811, 0.00728637, 0.0117163)
+bones/9/rotation = Quaternion(0.0254357, -0.684856, 0.0244135, 0.727825)
+bones/10/rotation = Quaternion(-0.0104559, 0.693425, -0.0197223, 0.720183)
+bones/12/scale = Vector3(1.00001, 0.999989, 1)
+bones/13/scale = Vector3(1.00001, 0.999986, 0.999999)
+bones/20/rotation = Quaternion(-0.00391847, 0.999961, 0.00700678, 0.00370352)
+bones/21/rotation = Quaternion(0.0130869, 0.695602, -0.0131161, 0.718188)
+bones/22/rotation = Quaternion(-0.0108286, -0.692772, 0.0207551, 0.720777)
+bones/31/rotation = Quaternion(0.00210285, 0.00496879, 0.999959, -0.00734182)
+bones/31/scale = Vector3(0.999988, 1, 0.999987)
+bones/32/rotation = Quaternion(0.0143897, 0.999849, -0.00961053, 0.00183856)
+bones/33/rotation = Quaternion(0.00222338, 0.703822, -0.71033, -0.00778863)
+bones/36/rotation = Quaternion(-0.00185727, 0.0149285, 0.99986, 0.00739066)
+bones/37/rotation = Quaternion(-0.0143296, 0.999448, -0.0297417, -0.00374721)
+bones/38/rotation = Quaternion(-0.0010225, 0.696561, -0.717441, 0.00895168)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01305, 0)
+shape = SubResource("CapsuleShape3D_2y867")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="3"]
+
+[node name="HealthLabel" type="Label" parent="CanvasLayer" index="0"]
+offset_right = 40.0
+offset_bottom = 23.0
+metadata/_edit_use_anchors_ = true
+
+[node name="TakedownSprite" type="AnimatedSprite2D" parent="CanvasLayer" index="1"]
+sprite_frames = SubResource("SpriteFrames_kf4mq")
+
+[node name="TakedownArea" type="Area3D" parent="." index="4"]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TakedownArea" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.08604, 0)
+shape = SubResource("SphereShape3D_m7pjx")

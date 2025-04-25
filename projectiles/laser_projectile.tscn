@@ -14,20 +14,22 @@ shader_parameter/glow_width = 0.4
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_l82qx"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l82qx"]
-radius = 0.0390581
-height = 0.434486
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c7er8"]
+radius = 0.0593041
+height = 0.810588
 
-[node name="LaserProjectile" type="RigidBody3D"]
+[node name="LaserProjectile" type="Area3D"]
 collision_mask = 8
 script = ExtResource("1_c7er8")
+min_damage = 5.0
+max_damage = 8.0
 
 [node name="LaserMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.0781498, -1.36242e-08, -1.47821e-16, 0, -1.36242e-08, 0.0773655, -3.41604e-09, -0.311685, -3.38175e-09, 0, 0, 0)
+transform = Transform3D(0.0958056, -1.95089e-08, -1.36722e-16, 0, -1.95089e-08, 0.0715568, -4.1878e-09, -0.446312, -3.12784e-09, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_c7er8")
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_l82qx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(2.68451e-15, -6.14145e-08, 1.405, -1.405, -6.14145e-08, 0, 6.14145e-08, -1.405, -6.14145e-08, 0, 0, 0)
-shape = SubResource("CapsuleShape3D_l82qx")
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_c7er8")

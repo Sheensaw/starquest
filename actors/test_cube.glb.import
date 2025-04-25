@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/test_cube.glb-3f1f6b7f743865b1304ea41bea9ad16
 
 [params]
 
-nodes/root_type="MeshInstance3D"
+nodes/root_type="CharacterBody3D"
 nodes/root_name=""
 nodes/apply_root_scale=true
 nodes/root_scale=1.0

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dficj8etg8pdm"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xkys1"]
+
+[node name="MeshInstance3D" type="MeshInstance3D"]
+transform = Transform3D(23.635, 0, 0, 0, 23.635, 0, 0, 0, 23.635, 0, 0, 0)
+mesh = SubResource("PlaneMesh_xkys1")
