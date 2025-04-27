@@ -1,0 +1,11 @@
+[gd_resource type="SkeletonProfile" format=3 uid="uid://ejowdpeunen3"]
+
+[resource]
+bone_size = 1
+bones/0/bone_name = &""
+bones/0/bone_parent = &""
+bones/0/tail_direction = 0
+bones/0/reference_pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+bones/0/handle_offset = Vector2(0, 0)
+bones/0/group = &""
+bones/0/require = false

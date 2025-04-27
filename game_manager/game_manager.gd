@@ -1,139 +1,81 @@
 extends Node
-
-@onready var player: CharacterBody3D = get_tree().get_nodes_in_group("player")[0] if get_tree().has_group("player") else null
-@onready var camera_rig: Node3D = get_tree().get_nodes_in_group("camera_rig")[0] if get_tree().has_group("camera_rig") else null
-@onready var target_sprite: Sprite3D = find_target_sprite()  # Utiliser une méthode pour trouver le TargetSprite
-@onready var ground_ray: RayCast3D = $GroundRay  # Référence au RayCast3D pour détecter le sol
-
-# Vitesse de rotation de la cible
-var rotation_speed: float = 2.0  # Vitesse de rotation en radians par seconde
-
+class_name GameManager
+#────────────────────────────────────────────────────────────
+@onready var player       : CharacterBody3D = _first("player")
+@onready var camera_rig   : Node3D          = _first("camera_rig")
+@onready var target_sprite: Sprite3D        = _find_sprite()
+#────────────────────────────────────────────────────────────
+@export var rotation_speed: float = 2.0   # rad/s
+@export var follow_lerp   : float = 0.25  # 0 = pas de lissage
+#────────────────────────────────────────────────────────────
 func _ready() -> void:
-	# Vérifier les références et afficher leur état
-	if not player:
-		push_error("GameManager.gd : aucun joueur trouvé dans le groupe 'player'.")
-	if not camera_rig:
-		push_error("GameManager.gd : aucun camera_rig trouvé dans le groupe 'camera_rig'.")
-	if not target_sprite:
-		push_error("GameManager.gd : aucun TargetSprite trouvé dans la scène après recherche.")
-	else:
-		# S'assurer que le sprite a une texture
-		if not target_sprite.texture:
-			# Créer une texture par défaut si aucune texture n'est définie
-			var default_texture = ImageTexture.new()
-			var image = Image.new()
-			image.create(64, 64, false, Image.FORMAT_RGBA8)  # Créer une image 64x64
-			image.fill(Color.WHITE)  # Remplir avec du blanc
-			default_texture.create_from_image(image)
-			target_sprite.texture = default_texture
-		# Cacher le sprite par défaut
-		target_sprite.visible = false
-	if not ground_ray:
-		push_error("GameManager.gd : aucun GroundRay trouvé dans la scène.")
-	if player and camera_rig:
+	if camera_rig and player and camera_rig.has_method("set_follow_target"):
 		camera_rig.set_follow_target(player)
-
+	_init_sprite()
+#────────────────────────────────────────────────────────────
 func _physics_process(delta: float) -> void:
-	# Vérifier si les nœuds nécessaires existent
-	if not player or not target_sprite or not ground_ray:
+	if not player or not target_sprite:
+		return
+	_update_sprite(delta)
+#────────────────────────────────────────────────────────────
+#  Helpers init
+#────────────────────────────────────────────────────────────
+func _first(g:String)->Node:
+	return get_tree().get_nodes_in_group(g)[0] if get_tree().has_group(g) and !get_tree().get_nodes_in_group(g).is_empty() else null
+
+func _find_sprite()->Sprite3D:
+	var s := get_node_or_null("NECROFROST/TargetSprite")
+	if s and s is Sprite3D: return s
+	for n in get_tree().get_nodes_in_group("TargetSprite"):
+		if n is Sprite3D: return n
+	return null
+
+func _init_sprite()->void:
+	if not target_sprite: return
+	if not target_sprite.texture:
+		var img:=Image.new(); img.create(64,64,false,Image.FORMAT_RGBA8); img.fill(Color.WHITE)
+		target_sprite.texture = ImageTexture.create_from_image(img)
+	target_sprite.visible    = false
+	target_sprite.pixel_size = 0.015
+	target_sprite.scale      = Vector3.ONE * 1.5
+#────────────────────────────────────────────────────────────
+#  Mise à jour du TargetSprite
+#────────────────────────────────────────────────────────────
+func _update_sprite(d:float)->void:
+	var tgt: Node3D = player.get_detected_target() if player else null
+	if not tgt or not is_instance_valid(tgt):
+		target_sprite.visible = false
 		return
 	
-	# Gérer la cible (Sprite3D)
-	update_target_sprite(delta)
+	target_sprite.visible  = true
+	target_sprite.modulate = Color(1,0,0,1) if tgt.is_in_group("enemies") else Color(0,1,0,1)
+	
+	_adapt_scale(tgt)
+	var goal := _ground_pos(tgt)
+	target_sprite.global_position = target_sprite.global_position.lerp(goal, follow_lerp)
+	target_sprite.rotation.y += rotation_speed * d
+#────────────────────────────────────────────────────────────
+#  Helpers : échelle & sol
+#────────────────────────────────────────────────────────────
+func _adapt_scale(ent:Node3D)->void:
+	var s:float = 1.5
+	var cs := ent.get_node("CollisionShape3D") if ent.has_node("CollisionShape3D") else null
+	if cs and cs.shape:
+		match cs.shape:
+			BoxShape3D:                        s = max(cs.shape.extents.x, cs.shape.extents.z) * 2.4
+			SphereShape3D, CylinderShape3D:    s = cs.shape.radius * 2.4
+	elif ent.has_node("MeshInstance3D"):
+		var m:Mesh = ent.get_node("MeshInstance3D").mesh
+		if m: s = max(m.get_aabb().size.x, m.get_aabb().size.z) * 1.2
+	target_sprite.scale = Vector3.ONE * clamp(s, 1.0, 2.0)
 
-# Méthode pour trouver le TargetSprite dans la scène
-func find_target_sprite() -> Sprite3D:
-	# Essayer d'abord le chemin spécifique
-	var sprite = get_node_or_null("NECROFROST/TargetSprite")
-	if sprite and sprite is Sprite3D:
-		return sprite
-	
-	# Si le chemin direct échoue, chercher dans toute la scène
-	var scene_root = get_tree().root
-	var found_sprite = null
-	var nodes_to_check = [scene_root]
-	while not nodes_to_check.is_empty():
-		var node = nodes_to_check.pop_front()
-		if node.name == "TargetSprite" and node is Sprite3D:
-			found_sprite = node
-			break
-		for child in node.get_children():
-			nodes_to_check.append(child)
-	
-	return found_sprite
-
-func update_target_sprite(delta: float) -> void:
-	# Vérifier si une cible est détectée dans le cône
-	var detected_target = player.get_detected_target()
-	if detected_target:
-		# Afficher la cible
-		target_sprite.visible = true
-		# Définir une opacité complète pour plus de visibilité
-		target_sprite.modulate.a = 1.0  # Opacité à 1.0
-		
-		# Déterminer la couleur du sprite en fonction du groupe "enemies"
-		if detected_target.is_in_group("enemies"):
-			target_sprite.modulate = Color(1, 0, 0, 1.0)  # Rouge pour les ennemis
-		else:
-			target_sprite.modulate = Color(0, 1, 0, 1.0)  # Vert pour les autres aimables
-		
-		# Ajuster l'échelle et la taille des pixels pour une taille raisonnable
-		target_sprite.scale = Vector3(1.5, 1.5, 1.5)  # Échelle à 1.5
-		target_sprite.pixel_size = 0.015  # Taille des pixels à 0.015
-		
-		# Positionner la cible au niveau du sol sous l'entité
-		position_sprite_on_ground(detected_target)
-		
-		# Faire tourner la cible
-		target_sprite.rotation.y += rotation_speed * delta
-	else:
-		# Cacher la cible
-		target_sprite.visible = false
-
-func adapt_sprite_to_entity_size(entity: Node3D) -> void:
-	var sprite_size: float = 2.0  # Taille par défaut si aucune taille n'est trouvée
-	
-	# Vérifier si l'entité a un CollisionShape3D
-	var collision_shape = entity.get_node("CollisionShape3D") if entity.has_node("CollisionShape3D") else null
-	if collision_shape and collision_shape.shape:
-		if collision_shape.shape is BoxShape3D:
-			var entity_extents = collision_shape.shape.extents
-			# Utiliser la plus grande dimension (x ou z) pour calculer la taille
-			sprite_size = max(entity_extents.x, entity_extents.z) * 2.4  # 2.4 pour correspondre à 1.2x les extents (diamètre)
-		elif collision_shape.shape is SphereShape3D:
-			var entity_radius = collision_shape.shape.radius
-			sprite_size = entity_radius * 2.4  # 2.4 pour correspondre à 1.2x le rayon (diamètre)
-		elif collision_shape.shape is CylinderShape3D:
-			var entity_radius = collision_shape.shape.radius
-			sprite_size = entity_radius * 2.4  # 2.4 pour correspondre à 1.2x le rayon (diamètre)
-		else:
-			# Si la forme n'est pas reconnue, utiliser une taille par défaut
-			sprite_size = 2.0
-	else:
-		# Si aucun CollisionShape3D n'est trouvé, chercher un nœud visuel (comme un MeshInstance3D)
-		var mesh_instance = entity.get_node("MeshInstance3D") if entity.has_node("MeshInstance3D") else null
-		if mesh_instance and mesh_instance.mesh:
-			var aabb = mesh_instance.mesh.get_aabb()
-			# Utiliser la plus grande dimension (x ou z) de la boîte englobante
-			sprite_size = max(aabb.size.x, aabb.size.z) * 1.2  # 1.2 pour correspondre à la taille visuelle
-	
-	# S'assurer que la taille n'est ni trop petite ni trop grande
-	sprite_size = clamp(sprite_size, 1.0, 2.0)  # Plage de taille à 1.0-2.0
-	
-	# Appliquer la taille au sprite
-	target_sprite.scale = Vector3(sprite_size, sprite_size, sprite_size)
-
-func position_sprite_on_ground(entity: Node3D) -> void:
-	# Positionner le RayCast3D au-dessus de l'entité pour détecter le sol
-	ground_ray.global_position = entity.global_position + Vector3(0, 2, 0)  # Commencer 2 unités au-dessus
-	ground_ray.global_rotation = Vector3.ZERO  # S'assurer qu'il pointe vers le bas
-	ground_ray.force_raycast_update()  # Forcer une mise à jour immédiate du RayCast
-	
-	# Vérifier si le RayCast détecte le sol
-	if ground_ray.is_colliding():
-		var ground_point = ground_ray.get_collision_point()
-		# Positionner le sprite au point de collision avec un léger décalage
-		target_sprite.global_position = Vector3(ground_point.x, ground_point.y + 0.01, ground_point.z)
-	else:
-		# Si aucun sol n'est détecté, position par défaut
-		target_sprite.global_position = Vector3(entity.global_position.x, 0.01, entity.global_position.z)
+func _ground_pos(ent:Node3D)->Vector3:
+	# Chaque ennemi/aimable possède son propre RayCast3D nommé "GroundRay"
+	if ent.has_node("GroundRay"):
+		var ray: RayCast3D = ent.get_node("GroundRay")
+		ray.force_raycast_update()
+		if ray.is_colliding():
+			var p := ray.get_collision_point()
+			return Vector3(p.x, p.y + 0.01, p.z)
+	# Repli : position XZ de l’entité
+	return ent.global_position + Vector3(0,0.01,0)

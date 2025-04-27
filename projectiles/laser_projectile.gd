@@ -1,81 +1,91 @@
 extends Area3D
 
-# Vitesse du projectile
-var speed: float = 60.0
-
-# Direction du projectile (par défaut vers l'avant)
-var direction: Vector3 = Vector3.FORWARD
-
-# Dégâts infligés par le projectile (aléatoire entre deux bornes)
-@export var min_damage: float = 10.0  # Dégâts minimum
-@export var max_damage: float = 20.0  # Dégâts maximum
-var damage: float
-
-# Points attribués au joueur pour chaque ennemi touché
+#────────────────────────────────────────────────────────────
+#  PARAMÈTRES EXPOSÉS
+#────────────────────────────────────────────────────────────
+@export var speed: float = 60.0
+@export var min_damage: float = 10.0
+@export var max_damage: float = 20.0
 @export var points_per_hit: int = 5
+@export var shoot_sound: AudioStream = preload("res://audio/sfx/laser_shoot.wav")
 
-# Son du tir
-var shoot_sound = preload("res://audio/sfx/laser_shoot.wav")
+@export var vertical_homing_lerp: float = 0.25
+@export_range(1,5,1) var sub_steps: int = 2
 
-# Durée de vie maximale du projectile (en secondes)
+#────────────────────────────────────────────────────────────
+#  VARIABLES RUNTIME
+#────────────────────────────────────────────────────────────
+var direction: Vector3 = Vector3.FORWARD
+var damage: float
 var lifetime: float = 5.0
 var time_alive: float = 0.0
-
-# Position initiale pour vérifier la distance parcourue
 var initial_position: Vector3
+var audio_player: AudioStreamPlayer3D
+var target_ref: Node3D = null
 
+#────────────────────────────────────────────────────────────
 func _ready() -> void:
-	# Initialiser les dégâts aléatoires entre min_damage et max_damage
 	damage = randf_range(min_damage, max_damage)
-	
-	# Enregistrer la position initiale
 	initial_position = global_position
 	
-	# Ajouter le projectile au groupe "player_projectiles"
 	add_to_group("player_projectiles")
+	connect("body_entered", Callable(self, "_on_body_entered"))
 	
-	# Vérifier si le signal body_entered est connecté
-	if not is_connected("body_entered", _on_body_entered):
-		var err = connect("body_entered", _on_body_entered)
-		if err != OK:
-			push_error("Erreur lors de la connexion du signal body_entered : ", err)
-	
-	# Créer et jouer le son du tir
-	var audio_player = AudioStreamPlayer3D.new()
+	# Audio
+	audio_player = get_node_or_null("AudioStreamPlayer3D") as AudioStreamPlayer3D
+	if audio_player == null:
+		audio_player = AudioStreamPlayer3D.new()
+		add_child(audio_player)
 	audio_player.stream = shoot_sound
-	audio_player.autoplay = true
-	audio_player.unit_size = 10.0  # Ajuste la portée du son (optionnel)
-	add_child(audio_player)
+	audio_player.play()
 
+#────────────────────────────────────────────────────────────
 func _physics_process(delta: float) -> void:
-	# Déplacer le projectile dans la direction définie
-	var motion = direction * speed * delta
-	global_position += motion
-	
-	# Orienter le projectile visuellement dans la direction de son mouvement
-	if direction != Vector3.ZERO:
-		var target_rotation = atan2(direction.x, direction.z) + PI
-		rotation.y = target_rotation
-	
-	# Mettre à jour le temps de vie
-	time_alive += delta
-	if time_alive > lifetime:
-		queue_free()  # Supprimer le projectile après sa durée de vie maximale
-	
-	# Vérifier la distance parcourue depuis la position initiale
-	var distance_traveled = global_position.distance_to(initial_position)
-	if distance_traveled > 100.0:  # Distance maximale arbitraire (ajuste si nécessaire)
-		queue_free()  # Supprimer le projectile s'il s'éloigne trop
+	var step: float = delta / sub_steps
+	for _i in range(sub_steps):
+		_home_vertical(step)
+		_move(step)
+		if _check_lifetime():
+			return
 
+#────────────────────────────────────────────────────────────
+#  HOMING VERTICAL (pitch uniquement)
+#────────────────────────────────────────────────────────────
+func _home_vertical(dt: float) -> void:
+	if target_ref and is_instance_valid(target_ref):
+		var off: Vector3 = target_ref.global_position - global_position
+		var dist_xz: float = max(0.001, sqrt(off.x * off.x + off.z * off.z))
+		var desired_y: float = clamp(off.y / dist_xz, -1.0, 1.0)
+		direction.y = lerp(direction.y, desired_y, vertical_homing_lerp)
+		direction   = direction.normalized()
+
+#────────────────────────────────────────────────────────────
+func _move(dt: float) -> void:
+	global_position += direction * speed * dt
+	rotation.x = -asin(direction.y)   # ajuste seulement le pitch
+
+#────────────────────────────────────────────────────────────
+func _check_lifetime() -> bool:
+	time_alive += get_physics_process_delta_time() / sub_steps
+	if time_alive > lifetime or global_position.distance_to(initial_position) > 100.0:
+		queue_free()
+		return true
+	return false
+
+#────────────────────────────────────────────────────────────
+#  IMPACT
+#────────────────────────────────────────────────────────────
 func _on_body_entered(body: Node) -> void:
-	# Vérifier si l'objet touché est un ennemi
-	if body.is_in_group("enemies"):
-		# Vérifier si l'ennemi a la méthode take_damage
-		if body.has_method("take_damage"):
-			body.take_damage(damage, self)  # Passer une référence à soi-même comme source
-			# Ajouter des points au score du joueur
-			var player_node = get_tree().get_nodes_in_group("player")[0] if get_tree().has_group("player") else null
-			if player_node and player_node.has_method("add_score"):
-				player_node.add_score(points_per_hit)
-	# Supprimer le projectile quand il touche un objet
+	if body.is_in_group("enemies") and body.has_method("take_damage"):
+		body.take_damage(damage, self)
+		var players := get_tree().get_nodes_in_group("player")
+		if players.size() > 0 and players[0].has_method("add_score"):
+			players[0].add_score(points_per_hit)
+	
+	# Laisser le son se terminer
+	audio_player.get_parent().remove_child(audio_player)
+	get_tree().root.add_child(audio_player)
+	audio_player.global_transform = global_transform
+	audio_player.play()
+	
 	queue_free()

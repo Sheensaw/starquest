@@ -26,8 +26,8 @@ directories/dtl_directory={}
 
 [display]
 
-window/size/viewport_width=2532
-window/size/viewport_height=1170
+window/size/viewport_width=1280
+window/size/viewport_height=591
 
 [editor_plugins]
 

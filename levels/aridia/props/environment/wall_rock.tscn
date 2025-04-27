@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4q60hp1evjj8"]
+
+[ext_resource type="PackedScene" uid="uid://bwshhhw5p2rta" path="res://levels/aridia/props/environment/wall_rock.glb" id="1_wahh5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wahh5"]
+size = Vector3(1.41058, 1.12592, 0.668213)
+
+[node name="wall_rock" groups=["cover"] instance=ExtResource("1_wahh5")]
+collision_layer = 8
+
+[node name="model" parent="." index="0"]
+transform = Transform3D(0.997474, -0.00918595, -0.0704335, -0.0674464, 0.188495, -0.979755, 0.0222763, 0.982031, 0.187399, 0, -0.152587, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1"]
+transform = Transform3D(0.993428, 0.112662, 0.0202198, -0.113932, 0.956278, 0.269356, 0.0110105, -0.269889, 0.962828, 0.0437455, 0.417033, -0.218005)
+shape = SubResource("BoxShape3D_wahh5")

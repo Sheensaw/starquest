@@ -1,0 +1,205 @@
+[gd_scene load_steps=37 format=3 uid="uid://cv7n5q7pgst52"]
+
+[ext_resource type="PackedScene" uid="uid://cp6wx5q05alga" path="res://characters/enemies/spider/spider_01/spider.glb" id="1_iw1l1"]
+[ext_resource type="Script" uid="uid://chx3ciim5igwb" path="res://characters/enemies/spider/spider_01/spider_01.gd" id="2_25ftg"]
+[ext_resource type="AnimationLibrary" uid="uid://btkvq1hhkvphe" path="res://characters/enemies/spider/animations/SpiderAnimations.res" id="2_61oku"]
+[ext_resource type="Material" uid="uid://bc3gcwec6u6uk" path="res://characters/enemies/spider/spider_01/spider_01_mat.tres" id="2_huw4p"]
+[ext_resource type="AnimationNodeBlendSpace2D" uid="uid://lbnqr38p6g0x" path="res://characters/enemies/spider/animations/Move.tres" id="4_25ftg"]
+[ext_resource type="Texture2D" uid="uid://ctyorjg7m0hmj" path="res://sprites/takedown/loading_icon00.png" id="5_1nty3"]
+[ext_resource type="Texture2D" uid="uid://b7xhb0hpdb58f" path="res://sprites/takedown/loading_icon01.png" id="6_fmhhm"]
+[ext_resource type="Texture2D" uid="uid://djsuh7egp7my6" path="res://sprites/takedown/loading_icon02.png" id="7_c011x"]
+[ext_resource type="Texture2D" uid="uid://cguuwf2jmtl3t" path="res://sprites/takedown/loading_icon03.png" id="8_2y8u5"]
+[ext_resource type="Texture2D" uid="uid://du488pkksrq5n" path="res://sprites/takedown/loading_icon04.png" id="9_m5qaf"]
+[ext_resource type="Texture2D" uid="uid://kuu2sr0dlrt8" path="res://sprites/takedown/loading_icon05.png" id="10_bugv2"]
+[ext_resource type="Texture2D" uid="uid://io3pud2l7u5j" path="res://sprites/takedown/loading_icon06.png" id="11_f0ywa"]
+[ext_resource type="Texture2D" uid="uid://bi7yo4p3iwetd" path="res://sprites/takedown/loading_icon07.png" id="12_e47wc"]
+[ext_resource type="Texture2D" uid="uid://cie688apey1da" path="res://sprites/takedown/loading_icon08.png" id="13_r1o1h"]
+[ext_resource type="Texture2D" uid="uid://d4cs8a0c3cccf" path="res://sprites/takedown/loading_icon09.png" id="14_u606p"]
+[ext_resource type="Texture2D" uid="uid://bmyk55cxruwbw" path="res://sprites/takedown/loading_icon10.png" id="15_hmggw"]
+[ext_resource type="Texture2D" uid="uid://mv3hb2x65ukg" path="res://sprites/takedown/loading_icon11.png" id="16_bvd8u"]
+[ext_resource type="Texture2D" uid="uid://c25eqd4unh358" path="res://sprites/takedown/loading_icon12.png" id="17_im3th"]
+[ext_resource type="Texture2D" uid="uid://cv3kk12r4qqbc" path="res://sprites/takedown/loading_icon13.png" id="18_6ipwj"]
+[ext_resource type="Texture2D" uid="uid://30t8soak35g5" path="res://sprites/takedown/loading_icon14.png" id="19_373eb"]
+[ext_resource type="Texture2D" uid="uid://dyd6212grs0l7" path="res://sprites/takedown/loading_icon15.png" id="20_vgya2"]
+[ext_resource type="Texture2D" uid="uid://bx2mwgsy1xcn" path="res://sprites/takedown/loading_icon16.png" id="21_5f0j1"]
+[ext_resource type="Texture2D" uid="uid://dmtyhy3d5u64i" path="res://sprites/takedown/loading_icon17.png" id="22_fnpxd"]
+[ext_resource type="Texture2D" uid="uid://jl7ekr6wxd10" path="res://sprites/takedown/loading_icon18.png" id="23_2woxp"]
+[ext_resource type="Texture2D" uid="uid://b4158pkgfojqd" path="res://sprites/takedown/loading_icon19.png" id="24_1jihl"]
+[ext_resource type="Texture2D" uid="uid://bnm7x8gq2w8w2" path="res://sprites/takedown/loading_icon20.png" id="25_mitki"]
+[ext_resource type="Texture2D" uid="uid://d06cwccqbd40m" path="res://sprites/takedown/loading_icon21.png" id="26_timyt"]
+[ext_resource type="Texture2D" uid="uid://d0olhwd66gaep" path="res://sprites/takedown/loading_icon22.png" id="27_yu4gr"]
+[ext_resource type="Texture2D" uid="uid://34m4mvalhmhh" path="res://sprites/takedown/loading_icon23.png" id="28_xsknm"]
+[ext_resource type="Texture2D" uid="uid://6ddswo3iwakm" path="res://sprites/takedown/loading_icon24.png" id="29_rcokm"]
+[ext_resource type="Texture2D" uid="uid://4vuec75gsifo" path="res://sprites/takedown/loading_icon25.png" id="30_013r8"]
+[ext_resource type="Texture2D" uid="uid://8063t6ciehfp" path="res://sprites/takedown/loading_icon26.png" id="31_h111s"]
+[ext_resource type="Texture2D" uid="uid://bjo5ghq18osgv" path="res://sprites/takedown/loading_icon27.png" id="32_6hi74"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_nf1ly"]
+radius = 0.657217
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_jhps0"]
+radius = 1.04046
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1nty3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_1nty3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_fmhhm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_c011x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_2y8u5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_m5qaf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_bugv2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_f0ywa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_e47wc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_r1o1h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_u606p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_hmggw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_bvd8u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_im3th")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_6ipwj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_373eb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_vgya2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_5f0j1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_fnpxd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_2woxp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_1jihl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_mitki")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_timyt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_yu4gr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_xsknm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_rcokm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_013r8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_h111s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_6hi74")
+}],
+"loop": true,
+"name": &"default",
+"speed": 30.0
+}]
+
+[node name="spider" instance=ExtResource("1_iw1l1")]
+collision_layer = 8
+script = ExtResource("2_25ftg")
+
+[node name="Armature_002" parent="." index="0"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="GeneralSkeleton" parent="Armature_002" index="0"]
+bones/1/position = Vector3(3.55271e-15, 0.660229, -0.00571927)
+bones/1/rotation = Quaternion(0.707107, 5.33851e-08, 5.33851e-08, 0.707107)
+bones/2/rotation = Quaternion(0.481459, 0.472278, 0.733738, -0.0823373)
+bones/3/rotation = Quaternion(-0.150024, 0.0467165, 0.660671, 0.734047)
+bones/4/rotation = Quaternion(0.55206, 0.511388, -0.458059, 0.473175)
+bones/5/rotation = Quaternion(-0.000247665, -0.697904, -0.0814783, 0.711542)
+bones/6/position = Vector3(0.155871, 0.47285, 0.204156)
+bones/6/rotation = Quaternion(0.405174, 0.224629, -0.241628, 0.852638)
+bones/7/rotation = Quaternion(0.145488, -0.027621, 0.505301, 0.850142)
+bones/8/rotation = Quaternion(0.25947, 0.727813, 0.536812, -0.338817)
+bones/9/rotation = Quaternion(0.0465882, -0.038921, 0.677223, 0.73327)
+bones/10/rotation = Quaternion(0.0274147, -0.0753792, -0.749787, 0.6568)
+bones/11/rotation = Quaternion(0.0447649, -0.012291, -0.154902, 0.986839)
+bones/12/rotation = Quaternion(-0.481459, 0.472277, 0.733738, 0.0823375)
+bones/13/rotation = Quaternion(-0.150024, -0.0467164, -0.660671, 0.734046)
+bones/14/rotation = Quaternion(0.552059, -0.511388, 0.45806, 0.473175)
+bones/15/rotation = Quaternion(-0.000247497, 0.697904, 0.0814784, 0.711542)
+bones/16/position = Vector3(-0.155871, 0.47285, 0.204156)
+bones/17/rotation = Quaternion(0.145488, 0.0276209, -0.505301, 0.850142)
+bones/18/rotation = Quaternion(-0.25947, 0.727813, 0.536812, 0.338817)
+bones/19/rotation = Quaternion(0.0465883, 0.038921, -0.677223, 0.733269)
+bones/20/rotation = Quaternion(0.0274146, 0.0753793, 0.749787, 0.6568)
+bones/21/rotation = Quaternion(0.0447649, 0.012291, 0.154902, 0.986839)
+bones/22/position = Vector3(0.858424, 0.00283888, 0.708365)
+bones/23/position = Vector3(0.905225, 0.00283891, -0.997794)
+bones/23/rotation = Quaternion(-0.190526, -0.190526, -0.680955, 0.680955)
+bones/24/position = Vector3(-0.858424, 0.00283888, 0.708365)
+bones/25/position = Vector3(-0.905225, 0.00283891, -0.997794)
+bones/25/rotation = Quaternion(-0.190526, 0.190526, 0.680955, 0.680955)
+
+[node name="model" parent="Armature_002/GeneralSkeleton" index="0"]
+material_override = ExtResource("2_huw4p")
+
+[node name="AnimationPlayer" parent="." index="1"]
+libraries = {
+&"SpiderAnimations": ExtResource("2_61oku")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="2"]
+tree_root = ExtResource("4_25ftg")
+anim_player = NodePath("../AnimationPlayer")
+parameters/blend_position = Vector2(0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.971445, 0)
+shape = SubResource("SphereShape3D_nf1ly")
+
+[node name="TakedownArea" type="Area3D" parent="." index="4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TakedownArea" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.08117, 0)
+shape = SubResource("SphereShape3D_jhps0")
+debug_color = Color(1, 0, 0, 0.419608)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="5"]
+
+[node name="HealthLabel" type="Label" parent="CanvasLayer" index="0"]
+offset_right = 40.0
+offset_bottom = 23.0
+metadata/_edit_use_anchors_ = true
+
+[node name="TakedownSprite" type="AnimatedSprite2D" parent="CanvasLayer" index="1"]
+sprite_frames = SubResource("SpriteFrames_1nty3")

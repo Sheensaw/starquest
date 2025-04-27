@@ -21,6 +21,9 @@ height = 0.810588
 [node name="LaserProjectile" type="Area3D"]
 collision_mask = 8
 script = ExtResource("1_c7er8")
+min_damage = 5.0
+max_damage = 8.0
+points_per_hit = 1
 
 [node name="LaserMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.0958056, -1.95089e-08, -1.36722e-16, 0, -1.95089e-08, 0.0715568, -4.1878e-09, -0.446312, -3.12784e-09, 0, 0, 0)
