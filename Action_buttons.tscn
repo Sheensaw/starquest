@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://cr5n1e0va52oe"]
+
+[ext_resource type="Texture2D" uid="uid://br30vphid6k8l" path="res://HUD/sprites/shoot_button.png" id="1_rnha3"]
+[ext_resource type="Texture2D" uid="uid://d0f87by06uh" path="res://HUD/sprites/shoot_button_pressed.png" id="2_cby7t"]
+[ext_resource type="Texture2D" uid="uid://dng0rntmlion" path="res://HUD/sprites/interact_button.png" id="3_j1tfo"]
+[ext_resource type="Texture2D" uid="uid://bn2agmicdoldp" path="res://HUD/sprites/interact_button_pressed.png" id="4_sitav"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wioi3"]
+radius = 64.0
+
+[sub_resource type="GDScript" id="GDScript_rnha3"]
+
+[node name="ActionsButtons" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ShootButton" type="TouchScreenButton" parent="."]
+position = Vector2(-192, -64)
+texture_normal = ExtResource("1_rnha3")
+texture_pressed = ExtResource("2_cby7t")
+shape = SubResource("CircleShape2D_wioi3")
+shape_visible = false
+action = "Shoot"
+script = SubResource("GDScript_rnha3")
+
+[node name="InteractButton" type="TouchScreenButton" parent="."]
+position = Vector2(-64, -192)
+texture_normal = ExtResource("3_j1tfo")
+texture_pressed = ExtResource("4_sitav")
+shape = SubResource("CircleShape2D_wioi3")
+shape_visible = false
+action = "Interact"
+script = SubResource("GDScript_rnha3")

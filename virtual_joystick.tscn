@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://km6hjfkyboet"]
+
+[ext_resource type="Texture2D" uid="uid://5neq8msk85ug" path="res://HUD/sprites/joystickkbg.png" id="1_kkvai"]
+[ext_resource type="Texture2D" uid="uid://bwkitok30kelq" path="res://HUD/sprites/joystick.png" id="2_fn8j3"]
+
+[node name="VirtualJoystick" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(64, 64)
+
+[node name="JoyBg" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("1_kkvai")
+
+[node name="JoyKnob" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("2_fn8j3")

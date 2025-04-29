@@ -1,34 +1,6 @@
-[gd_scene load_steps=35 format=3 uid="uid://5ej61d8wntwk"]
+[gd_scene load_steps=6 format=3 uid="uid://5ej61d8wntwk"]
 
 [ext_resource type="Script" uid="uid://cu44l82sqj8tw" path="res://characters/enemies/Enemy.gd" id="1_uy33a"]
-[ext_resource type="Texture2D" uid="uid://ctyorjg7m0hmj" path="res://sprites/takedown/loading_icon00.png" id="2_jdro6"]
-[ext_resource type="Texture2D" uid="uid://b7xhb0hpdb58f" path="res://sprites/takedown/loading_icon01.png" id="3_cpiqt"]
-[ext_resource type="Texture2D" uid="uid://djsuh7egp7my6" path="res://sprites/takedown/loading_icon02.png" id="4_m7fmi"]
-[ext_resource type="Texture2D" uid="uid://cguuwf2jmtl3t" path="res://sprites/takedown/loading_icon03.png" id="5_ucblf"]
-[ext_resource type="Texture2D" uid="uid://du488pkksrq5n" path="res://sprites/takedown/loading_icon04.png" id="6_dcovy"]
-[ext_resource type="Texture2D" uid="uid://kuu2sr0dlrt8" path="res://sprites/takedown/loading_icon05.png" id="7_p7r8d"]
-[ext_resource type="Texture2D" uid="uid://io3pud2l7u5j" path="res://sprites/takedown/loading_icon06.png" id="8_h0lt7"]
-[ext_resource type="Texture2D" uid="uid://bi7yo4p3iwetd" path="res://sprites/takedown/loading_icon07.png" id="9_qgah8"]
-[ext_resource type="Texture2D" uid="uid://cie688apey1da" path="res://sprites/takedown/loading_icon08.png" id="10_mnu42"]
-[ext_resource type="Texture2D" uid="uid://d4cs8a0c3cccf" path="res://sprites/takedown/loading_icon09.png" id="11_mp0l3"]
-[ext_resource type="Texture2D" uid="uid://bmyk55cxruwbw" path="res://sprites/takedown/loading_icon10.png" id="12_fdiwv"]
-[ext_resource type="Texture2D" uid="uid://mv3hb2x65ukg" path="res://sprites/takedown/loading_icon11.png" id="13_ostgh"]
-[ext_resource type="Texture2D" uid="uid://c25eqd4unh358" path="res://sprites/takedown/loading_icon12.png" id="14_er5vc"]
-[ext_resource type="Texture2D" uid="uid://cv3kk12r4qqbc" path="res://sprites/takedown/loading_icon13.png" id="15_e62k7"]
-[ext_resource type="Texture2D" uid="uid://30t8soak35g5" path="res://sprites/takedown/loading_icon14.png" id="16_d58ma"]
-[ext_resource type="Texture2D" uid="uid://dyd6212grs0l7" path="res://sprites/takedown/loading_icon15.png" id="17_vybuf"]
-[ext_resource type="Texture2D" uid="uid://bx2mwgsy1xcn" path="res://sprites/takedown/loading_icon16.png" id="18_a8aac"]
-[ext_resource type="Texture2D" uid="uid://dmtyhy3d5u64i" path="res://sprites/takedown/loading_icon17.png" id="19_bl1nh"]
-[ext_resource type="Texture2D" uid="uid://jl7ekr6wxd10" path="res://sprites/takedown/loading_icon18.png" id="20_kbrd0"]
-[ext_resource type="Texture2D" uid="uid://b4158pkgfojqd" path="res://sprites/takedown/loading_icon19.png" id="21_38lnn"]
-[ext_resource type="Texture2D" uid="uid://bnm7x8gq2w8w2" path="res://sprites/takedown/loading_icon20.png" id="22_7yxav"]
-[ext_resource type="Texture2D" uid="uid://d06cwccqbd40m" path="res://sprites/takedown/loading_icon21.png" id="23_we0vx"]
-[ext_resource type="Texture2D" uid="uid://d0olhwd66gaep" path="res://sprites/takedown/loading_icon22.png" id="24_tt8vs"]
-[ext_resource type="Texture2D" uid="uid://34m4mvalhmhh" path="res://sprites/takedown/loading_icon23.png" id="25_2s6xg"]
-[ext_resource type="Texture2D" uid="uid://6ddswo3iwakm" path="res://sprites/takedown/loading_icon24.png" id="26_d2jn5"]
-[ext_resource type="Texture2D" uid="uid://4vuec75gsifo" path="res://sprites/takedown/loading_icon25.png" id="27_fa7vl"]
-[ext_resource type="Texture2D" uid="uid://8063t6ciehfp" path="res://sprites/takedown/loading_icon26.png" id="28_tnway"]
-[ext_resource type="Texture2D" uid="uid://bjo5ghq18osgv" path="res://sprites/takedown/loading_icon27.png" id="29_ectne"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_klktt"]
 radius = 0.363015
@@ -37,98 +9,6 @@ radius = 0.363015
 emission_energy_multiplier = 8.55
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_uy33a"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_ums20"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_jdro6")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_cpiqt")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_m7fmi")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_ucblf")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_dcovy")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_p7r8d")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_h0lt7")
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_qgah8")
-}, {
-"duration": 1.0,
-"texture": ExtResource("10_mnu42")
-}, {
-"duration": 1.0,
-"texture": ExtResource("11_mp0l3")
-}, {
-"duration": 1.0,
-"texture": ExtResource("12_fdiwv")
-}, {
-"duration": 1.0,
-"texture": ExtResource("13_ostgh")
-}, {
-"duration": 1.0,
-"texture": ExtResource("14_er5vc")
-}, {
-"duration": 1.0,
-"texture": ExtResource("15_e62k7")
-}, {
-"duration": 1.0,
-"texture": ExtResource("16_d58ma")
-}, {
-"duration": 1.0,
-"texture": ExtResource("17_vybuf")
-}, {
-"duration": 1.0,
-"texture": ExtResource("18_a8aac")
-}, {
-"duration": 1.0,
-"texture": ExtResource("19_bl1nh")
-}, {
-"duration": 1.0,
-"texture": ExtResource("20_kbrd0")
-}, {
-"duration": 1.0,
-"texture": ExtResource("21_38lnn")
-}, {
-"duration": 1.0,
-"texture": ExtResource("22_7yxav")
-}, {
-"duration": 1.0,
-"texture": ExtResource("23_we0vx")
-}, {
-"duration": 1.0,
-"texture": ExtResource("24_tt8vs")
-}, {
-"duration": 1.0,
-"texture": ExtResource("25_2s6xg")
-}, {
-"duration": 1.0,
-"texture": ExtResource("26_d2jn5")
-}, {
-"duration": 1.0,
-"texture": ExtResource("27_fa7vl")
-}, {
-"duration": 1.0,
-"texture": ExtResource("28_tnway")
-}, {
-"duration": 1.0,
-"texture": ExtResource("29_ectne")
-}],
-"loop": true,
-"name": &"default",
-"speed": 30.0
-}]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_jdro6"]
 radius = 1.06704
@@ -153,9 +33,6 @@ mesh = SubResource("CapsuleMesh_uy33a")
 offset_right = 40.0
 offset_bottom = 23.0
 metadata/_edit_use_anchors_ = true
-
-[node name="TakedownSprite" type="AnimatedSprite2D" parent="CanvasLayer"]
-sprite_frames = SubResource("SpriteFrames_ums20")
 
 [node name="TakedownArea" type="Area3D" parent="."]
 collision_layer = 4

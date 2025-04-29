@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://ciediynw7dxdu"]
+
+[ext_resource type="Texture2D" uid="uid://d0wq8v4bvjq54" path="res://HUD/sprites/target.png" id="1_bxrvk"]
+
+[node name="TargetSprite" type="Sprite3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+texture = ExtResource("1_bxrvk")
