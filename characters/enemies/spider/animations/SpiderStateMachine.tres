@@ -73,6 +73,7 @@ transitions = ["Start", "StunStart", SubResource("AnimationNodeStateMachineTrans
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5f0j1"]
+xfade_time = 0.2
 advance_mode = 2
 advance_expression = "!spawned"
 
@@ -85,38 +86,49 @@ advance_mode = 2
 advance_expression = "moving == false"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xsknm"]
+xfade_time = 0.2
 advance_mode = 2
 advance_expression = "stun == true"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_rcokm"]
+xfade_time = 0.2
 advance_mode = 2
 advance_expression = "stun == true"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_013r8"]
+xfade_time = 0.2
 advance_mode = 2
 advance_expression = "dead == true"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_c011x"]
+xfade_time = 0.2
 advance_mode = 2
 advance_expression = "attacking == true"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2y8u5"]
+xfade_time = 0.2
+break_loop_at_end = true
 advance_mode = 2
 advance_expression = "!attacking and not moving"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_m5qaf"]
+xfade_time = 0.2
+break_loop_at_end = true
 advance_mode = 2
 advance_expression = "!attacking and moving"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bugv2"]
+xfade_time = 0.2
 advance_mode = 2
 advance_expression = "attacking == true"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fmhhm"]
+xfade_time = 0.2
 advance_mode = 2
 advance_expression = "dead == true"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_f0ywa"]
+xfade_time = 0.2
 advance_mode = 2
 advance_expression = "current_health <= 0"
 
@@ -136,4 +148,4 @@ states/Stun/position = Vector2(633, 162)
 states/Walk/node = ExtResource("1_tit55")
 states/Walk/position = Vector2(633, 23)
 transitions = ["Start", "Spawn", SubResource("AnimationNodeStateMachineTransition_6ipwj"), "Spawn", "Idle", SubResource("AnimationNodeStateMachineTransition_5f0j1"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_fnpxd"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_2woxp"), "Walk", "Stun", SubResource("AnimationNodeStateMachineTransition_xsknm"), "Idle", "Stun", SubResource("AnimationNodeStateMachineTransition_rcokm"), "Idle", "Death", SubResource("AnimationNodeStateMachineTransition_013r8"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_c011x"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_2y8u5"), "Attack", "Walk", SubResource("AnimationNodeStateMachineTransition_m5qaf"), "Walk", "Attack", SubResource("AnimationNodeStateMachineTransition_bugv2"), "Stun", "Death", SubResource("AnimationNodeStateMachineTransition_fmhhm"), "Walk", "Death", SubResource("AnimationNodeStateMachineTransition_f0ywa")]
-graph_offset = Vector2(-31, -177)
+graph_offset = Vector2(27, -30)

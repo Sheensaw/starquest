@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://boi7c5isoetpy"]
 
 [ext_resource type="Script" uid="uid://c0et2xheyrv8c" path="res://projectiles/laser_projectile.gd" id="1_c7er8"]
-[ext_resource type="Texture2D" uid="uid://df7dshdw73yl5" path="res://HUD/sprites/laser.png" id="2_c7er8"]
+[ext_resource type="Texture2D" uid="uid://y12hf1mxi6my" path="res://HUD/sprites/laser.png" id="2_c7er8"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_c7er8"]
 radius = 0.0975533
@@ -16,10 +16,10 @@ max_damage = 8.0
 points_per_hit = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.29199)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.252201)
 shape = SubResource("SphereShape3D_c7er8")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(3.14124e-16, -0.164404, 7.18632e-09, -7.18632e-09, -7.18632e-09, -0.164404, 0.164404, 0, -7.18632e-09, 0.00154543, -1.19209e-07, 0.157997)
+transform = Transform3D(-1.04907e-08, -0.24, 1.04907e-08, 0, -1.04907e-08, -0.24, 0.24, -1.04907e-08, 4.58565e-16, 0, 0, 0)
 cast_shadow = 0
 texture = ExtResource("2_c7er8")

@@ -1,64 +1,49 @@
 extends Node
 class_name GameManager
 
-#────────────────────────────────────────────────────────────
-@export var rotation_speed : float = 2.0      # rad /s
-@export var follow_lerp    : float = 0.25     # lissage sprite
+# Constantes
+const TARGET_SCN: PackedScene = preload("res://HUD/sprites/TargetSprite.tscn")
+const TAKEDOWN_SCN: PackedScene = preload("res://HUD/sprites/TakedownSprite.tscn")
 
-#────────────────────────────────────────────────────────────
-var player          : CharacterBody3D
-var camera_rig      : Node3D
-var target_sprite   : Sprite3D        # rouge / vert
-var takedown_sprite : Sprite3D        # bleu (billboard)
+# Variables exportées
+@export var rotation_speed: float = 2.0  # Vitesse de rotation (rad/s)
+@export var follow_lerp: float = 0.25    # Lissage du sprite
 
-#────────────────────────────────────────────────────────────
-const TARGET_SCN   : PackedScene = preload("res://HUD/sprites/TargetSprite.tscn")
-const TAKEDOWN_SCN : PackedScene = preload("res://HUD/sprites/TakedownSprite.tscn")
+# Variables runtime
+var player: CharacterBody3D
+var camera_rig: Node3D
+var target_sprite: Sprite3D  # Sprite de cible (rouge/vert)
+var takedown_sprite: Sprite3D  # Sprite de takedown (bleu)
 
-#────────────────────────────────────────────────────────────
 func _ready() -> void:
 	set_physics_process(false)
 	call_deferred("_late_init")
 
-#────────────────────────────────────────────────────────────
 func _late_init() -> void:
-	player        = _first("player")
-	camera_rig    = _first("camera_rig")
+	player = _first("player")
+	camera_rig = _first("camera_rig")
 	target_sprite = _find_sprite("TargetSprite")
 	takedown_sprite = _find_sprite("TakedownSprite")
-	
-	# ── instanciation sûre ──────────────────────────────────
 	if target_sprite == null:
 		target_sprite = _safe_instance(TARGET_SCN, "TargetSprite")
 	if takedown_sprite == null:
 		takedown_sprite = _safe_instance(TAKEDOWN_SCN, "TakedownSprite")
-	
-	# Billboard pour le sprite de takedown (1 = BILLBOARD_ENABLED)
 	if takedown_sprite and "billboard_mode" in takedown_sprite:
 		takedown_sprite.billboard_mode = 1
-	
-	# Apparence par défaut
 	_init_sprite(target_sprite)
 	_init_sprite(takedown_sprite, Color(0.2, 0.6, 1.0))
-	
-	# Caméra suiveuse
 	if camera_rig and player and camera_rig.has_method("set_follow_target"):
 		camera_rig.set_follow_target(player)
-	
 	set_physics_process(true)
 
-#────────────────────────────────────────────────────────────
 func _physics_process(dt: float) -> void:
 	if not player or not is_instance_valid(player):
 		player = _first("player")
-	if not player: return
-	
+	if not player:
+		return
 	_update_target_sprite(dt)
 	_update_takedown_sprite(dt)
 
-#────────────────────────────────────────────────────────────
-#  ── helpers ───────────────────────────────────────────────
-#────────────────────────────────────────────────────────────
 func _first(group_name: String) -> Node:
 	var nodes = get_tree().get_nodes_in_group(group_name)
 	return nodes[0] if nodes else null
@@ -85,7 +70,6 @@ func _safe_instance(scene: PackedScene, group_name: String) -> Sprite3D:
 		push_error("%s scene is not a Sprite3D." % group_name)
 		return null
 
-#────────────────────────────────────────────────────────────
 func _init_sprite(s: Sprite3D, col: Color = Color.WHITE) -> void:
 	if s == null: return
 	if not s.texture:
@@ -93,27 +77,21 @@ func _init_sprite(s: Sprite3D, col: Color = Color.WHITE) -> void:
 		img.create(32, 32, false, Image.FORMAT_RGBA8)
 		img.fill(Color.WHITE)
 		s.texture = ImageTexture.create_from_image(img)
-	s.modulate   = col
+	s.modulate = col
 	s.pixel_size = 0.015
-	s.scale      = Vector3.ONE * 1.5
-	s.visible    = false
+	s.scale = Vector3.ONE * 1.5
+	s.visible = false
 
-#────────────────────────────────────────────────────────────
-#  sprite de visée rouge / vert
-#────────────────────────────────────────────────────────────
 func _update_target_sprite(dt: float) -> void:
 	if target_sprite == null: return
 	var tgt: Node3D = player.get_detected_target()
 	if tgt and is_instance_valid(tgt):
-		target_sprite.visible  = true
+		target_sprite.visible = true
 		target_sprite.modulate = Color(1, 0, 0, 1) if tgt.is_in_group("enemies") else Color(0, 1, 0, 1)
 		_place_sprite(target_sprite, tgt, dt)
 	else:
 		target_sprite.visible = false
 
-#────────────────────────────────────────────────────────────
-#  sprite de takedown bleu
-#────────────────────────────────────────────────────────────
 func _update_takedown_sprite(dt: float) -> void:
 	if takedown_sprite == null: return
 	var stunned_enemy: Node3D = null
@@ -127,9 +105,6 @@ func _update_takedown_sprite(dt: float) -> void:
 	else:
 		takedown_sprite.visible = false
 
-#────────────────────────────────────────────────────────────
-#  placement commun
-#────────────────────────────────────────────────────────────
 func _place_sprite(s: Sprite3D, ent: Node3D, dt: float, y_off: float = 0.01) -> void:
 	_adapt_scale(s, ent)
 	var goal: Vector3 = _ground_pos(ent) + Vector3(0, y_off, 0)

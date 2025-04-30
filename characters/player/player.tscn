@@ -12411,49 +12411,49 @@ _data = {
 &"Armature_006|mixamo_com|Layer0_001": SubResource("Animation_pyke0")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_yabkp"]
-animation = &"PlayerRun/Action_002"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_x3sgo"]
+animation = &"Idle"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_efs2p"]
-animation = &"PlayerRun/Action_002"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ryqyf"]
+animation = &"StrafeForward"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5dc8e"]
-animation = &"PlayerIdle/Action_009_merged"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1hlws"]
+animation = &"StrafeForward"
 
 [sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_idpv6"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_yabkp")
-blend_point_0/pos = -1.0
-blend_point_1/node = SubResource("AnimationNodeAnimation_efs2p")
+blend_point_0/node = SubResource("AnimationNodeAnimation_x3sgo")
+blend_point_0/pos = 0.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_ryqyf")
 blend_point_1/pos = 1.0
-blend_point_2/node = SubResource("AnimationNodeAnimation_5dc8e")
-blend_point_2/pos = 0.0
+blend_point_2/node = SubResource("AnimationNodeAnimation_1hlws")
+blend_point_2/pos = -1.0
 snap = 1.0
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ixbpm"]
-animation = &"PlayerStrafeIdle/Action_002_merged"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_m3swb"]
+animation = &"Idle"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c6leb"]
-animation = &"PlayerStrafeForward/Action_002_merged"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4ashp"]
+animation = &"StrafeBackward"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dirf7"]
-animation = &"PlayerStrafeBackward/Action_008_merged"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_j16x2"]
+animation = &"StrafeForward"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_idpv6"]
-animation = &"PlayerStrafeRight/Action_002_merged"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_uc5xm"]
+animation = &"StrafeRight"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rpf03"]
-animation = &"PlayerStrafeLeft/Action_002_merged"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_f08cw"]
+animation = &"StrafeLeft"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_5dc8e"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_ixbpm")
+blend_point_0/node = SubResource("AnimationNodeAnimation_m3swb")
 blend_point_0/pos = Vector2(0, 0)
-blend_point_1/node = SubResource("AnimationNodeAnimation_c6leb")
-blend_point_1/pos = Vector2(0, -1)
-blend_point_2/node = SubResource("AnimationNodeAnimation_dirf7")
-blend_point_2/pos = Vector2(0, 1)
-blend_point_3/node = SubResource("AnimationNodeAnimation_idpv6")
+blend_point_1/node = SubResource("AnimationNodeAnimation_4ashp")
+blend_point_1/pos = Vector2(0, 1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_j16x2")
+blend_point_2/pos = Vector2(0, -1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_uc5xm")
 blend_point_3/pos = Vector2(1, 0)
-blend_point_4/node = SubResource("AnimationNodeAnimation_rpf03")
+blend_point_4/node = SubResource("AnimationNodeAnimation_f08cw")
 blend_point_4/pos = Vector2(-1, 0)
 snap = Vector2(0.5, 0.5)
 
@@ -12480,7 +12480,7 @@ transitions = ["Start", "Normal", SubResource("AnimationNodeStateMachineTransiti
 graph_offset = Vector2(57, 37)
 
 [sub_resource type="LabelSettings" id="LabelSettings_5dc8e"]
-font_size = 35
+font_size = 25
 
 [node name="player" groups=["player"] instance=ExtResource("1_508ok")]
 collision_mask = 14
@@ -12490,25 +12490,25 @@ detection_radius = 10.0
 
 [node name="GeneralSkeleton" parent="Armature" index="0"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-bones/0/position = Vector3(0.0396568, 1.02083, -0.0030547)
-bones/0/rotation = Quaternion(0.0323667, -0.0955406, 0.0410178, 0.994053)
-bones/1/rotation = Quaternion(0.0449476, 0.0286262, -0.0240845, 0.998289)
-bones/2/rotation = Quaternion(0.0122286, 0.00612073, -0.00619445, 0.999887)
-bones/3/rotation = Quaternion(0.0121966, 0.00626164, -0.0044466, 0.999896)
-bones/4/rotation = Quaternion(0.0179801, 0.0441372, 0.0150721, 0.99875)
-bones/5/rotation = Quaternion(0.000227259, -0.0841072, 0.0159655, 0.996329)
-bones/7/rotation = Quaternion(0.466909, 0.509962, 0.613256, -0.381905)
-bones/8/rotation = Quaternion(-0.0378889, 0.998261, 0.0425981, -0.0150265)
+bones/0/position = Vector3(0.0478864, 1.0267, 0.00643545)
+bones/0/rotation = Quaternion(0.0322038, -0.101148, 0.0420479, 0.993461)
+bones/1/rotation = Quaternion(0.0423751, 0.034109, -0.0202757, 0.998313)
+bones/2/rotation = Quaternion(0.0138211, 0.00547038, -0.00657573, 0.999868)
+bones/3/rotation = Quaternion(0.0144284, 0.00559353, -0.00454102, 0.99987)
+bones/4/rotation = Quaternion(0.0226704, 0.0655426, 0.0227286, 0.997333)
+bones/5/rotation = Quaternion(0.0697097, 0.186761, -0.0122848, 0.979852)
+bones/7/rotation = Quaternion(0.466488, 0.510231, 0.613691, -0.381361)
+bones/8/rotation = Quaternion(-0.038493, 0.998223, 0.0429341, -0.0150013)
 bones/9/rotation = Quaternion(0.288426, -0.835908, 0.18728, 0.427778)
 bones/10/rotation = Quaternion(-0.0515669, 0.525159, -0.201135, 0.825284)
 bones/11/rotation = Quaternion(-0.313594, 0.683563, 0.561273, 0.345506)
 bones/12/rotation = Quaternion(0.338504, 0.302515, 0.0153506, 0.890878)
-bones/13/rotation = Quaternion(0.0045919, -0.103893, -0.0811651, 0.991261)
+bones/13/rotation = Quaternion(0.00469794, -0.10377, -0.0811177, 0.991277)
 bones/14/position = Vector3(-0.0131577, 0.0145768, -0.0153794)
 bones/14/rotation = Quaternion(0.0362489, -0.729897, 0.459332, 0.504925)
 bones/14/scale = Vector3(1.00045, 1.00045, 1.00032)
 bones/15/rotation = Quaternion(0.373671, 0.102421, 0.17122, 0.90585)
-bones/16/rotation = Quaternion(0.150077, 0.197455, 0.0589616, 0.96696)
+bones/16/rotation = Quaternion(0.149865, 0.197319, 0.0588411, 0.967028)
 bones/17/rotation = Quaternion(0.284622, 0.151333, 0.153853, 0.934033)
 bones/18/position = Vector3(-0.0165605, -0.00882788, 0.0404577)
 bones/18/rotation = Quaternion(0.651564, 0.1469, 0.359339, 0.651736)
@@ -12516,30 +12516,30 @@ bones/19/rotation = Quaternion(0.420971, -0.556078, -0.586909, -0.411215)
 bones/20/rotation = Quaternion(-0.122058, 0.977974, 0.0196199, 0.16818)
 bones/21/rotation = Quaternion(0.33676, 0.871691, -0.290896, 0.205247)
 bones/22/rotation = Quaternion(0.0119459, -0.60659, 0.378923, 0.698801)
-bones/23/rotation = Quaternion(-0.296961, -0.632758, -0.565474, 0.437802)
-bones/24/rotation = Quaternion(0.281034, -0.202937, 0.238198, 0.907248)
-bones/25/rotation = Quaternion(0.281451, -0.234016, 0.014972, 0.930483)
+bones/23/rotation = Quaternion(-0.29586, -0.632967, -0.566016, 0.437545)
+bones/24/rotation = Quaternion(0.281722, -0.204227, 0.237665, 0.906884)
+bones/25/rotation = Quaternion(0.281873, -0.234576, 0.0146991, 0.930218)
 bones/26/position = Vector3(0.0125216, 0.0177432, -0.0176802)
 bones/26/rotation = Quaternion(0.0150879, 0.751699, -0.425708, 0.503481)
-bones/27/rotation = Quaternion(0.0467164, 0.0807754, -0.080667, 0.992364)
+bones/27/rotation = Quaternion(0.047492, 0.0803864, -0.0808583, 0.992343)
 bones/28/rotation = Quaternion(0.173895, -0.16712, -0.0456661, 0.969405)
 bones/29/rotation = Quaternion(0.433149, -0.25605, -0.210674, 0.838115)
 bones/30/position = Vector3(0.016983, -0.00386921, 0.0373394)
 bones/30/rotation = Quaternion(0.621346, -0.124438, -0.351313, 0.68922)
-bones/31/rotation = Quaternion(0.151704, 0.209587, 0.965948, 0.00222751)
-bones/32/rotation = Quaternion(0.0132934, 0.966013, -0.257456, 0.0189361)
-bones/33/rotation = Quaternion(-0.0146379, 0.653051, -0.756968, -0.017577)
-bones/34/rotation = Quaternion(-1.81367e-06, 1, 0.000329485, 4.65322e-07)
-bones/36/rotation = Quaternion(-0.0270547, 0.152144, 0.981117, 0.116321)
-bones/37/rotation = Quaternion(-0.0103843, 0.957004, -0.288965, -0.0231376)
-bones/38/rotation = Quaternion(0.109152, 0.600886, -0.790954, 0.0375867)
-bones/39/rotation = Quaternion(4.41796e-06, 1, -7.69626e-05, -2.20416e-06)
+bones/31/rotation = Quaternion(0.153182, 0.184947, 0.970726, 0.00448451)
+bones/32/rotation = Quaternion(0.0111587, 0.966757, -0.254879, 0.0171437)
+bones/33/rotation = Quaternion(-0.00992502, 0.661108, -0.750108, -0.0132642)
+bones/34/rotation = Quaternion(-1.81284e-06, 1, -1.1006e-05, 4.6461e-07)
+bones/36/rotation = Quaternion(-0.0245506, 0.150072, 0.980685, 0.123013)
+bones/37/rotation = Quaternion(-0.0115157, 0.970527, -0.239818, -0.0207839)
+bones/38/rotation = Quaternion(0.11747, 0.60206, -0.789036, 0.0338666)
+bones/39/rotation = Quaternion(4.41424e-06, 1, 0.000358233, -2.20717e-06)
 
 [node name="model" parent="Armature/GeneralSkeleton" index="0"]
 material_override = ExtResource("3_exd8k")
 
 [node name="WeaponSocket" type="BoneAttachment3D" parent="Armature/GeneralSkeleton" index="1"]
-transform = Transform3D(0.516839, -0.0782438, 0.852499, 0.494786, -0.785344, -0.372051, 0.698616, 0.614095, -0.367183, -0.167901, 1.19662, 0.2017)
+transform = Transform3D(0.50971, -0.0735579, 0.857196, 0.498878, -0.786465, -0.364134, 0.700939, 0.613239, -0.364173, -0.161326, 1.20061, 0.20898)
 bone_name = "RightHand"
 bone_idx = 22
 
@@ -12584,34 +12584,39 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.160774, 1.43327, -1.5003)
 follow_viewport_enabled = true
 
 [node name="Healthbar" type="ProgressBar" parent="PlayerHUD" index="0"]
-anchors_preset = 8
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -359.0
-offset_top = 202.5
-offset_right = 31.0
-offset_bottom = 234.5
+anchor_bottom = 1.0
+offset_left = -195.0
+offset_top = -74.87
+offset_right = 195.0
+offset_bottom = -47.87
 grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1.84, 1.84)
+grow_vertical = 0
+pivot_offset = Vector2(195, 13)
+size_flags_horizontal = 4
 size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
 
 [node name="HealthLabel" type="Label" parent="PlayerHUD" index="1"]
-anchors_preset = 8
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 1.0
 offset_left = -56.0
-offset_top = 128.5
+offset_top = -135.96
 offset_right = 56.0
-offset_bottom = 177.5
+offset_bottom = -86.96
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 text = "Health"
 label_settings = SubResource("LabelSettings_5dc8e")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="ScoreLabel" type="Label" parent="PlayerHUD" index="2"]
 anchors_preset = 1
@@ -12625,6 +12630,7 @@ grow_horizontal = 0
 text = "Score"
 label_settings = SubResource("LabelSettings_5dc8e")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="ScoreValue" type="Label" parent="PlayerHUD" index="3"]
 anchors_preset = 1
@@ -12638,14 +12644,16 @@ grow_horizontal = 0
 text = "00"
 label_settings = SubResource("LabelSettings_5dc8e")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="VirtualJoystick" parent="PlayerHUD" index="4" instance=ExtResource("5_ixbpm")]
-offset_left = -513.0
-offset_top = 122.5
-offset_right = -513.0
-offset_bottom = 122.5
+offset_left = -471.0
+offset_top = 200.0
+offset_right = -471.0
+offset_bottom = 200.0
 pivot_offset = Vector2(0, 0)
 script = ExtResource("6_c6leb")
+metadata/_edit_use_anchors_ = true
 
 [node name="ActionsButtons" parent="PlayerHUD" index="5" instance=ExtResource("7_dirf7")]
 anchors_preset = 3
@@ -12653,10 +12661,11 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -147.0
-offset_top = -178.0
-offset_right = -147.0
-offset_bottom = -178.0
+offset_left = -140.0
+offset_top = -146.0
+offset_right = -140.0
+offset_bottom = -146.0
 grow_horizontal = 0
 grow_vertical = 0
 scale = Vector2(0.645, 0.645)
+metadata/_edit_use_anchors_ = true
