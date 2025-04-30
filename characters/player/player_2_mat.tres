@@ -1,9 +1,10 @@
 [gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://dx1l1v8tasttn"]
 
-[ext_resource type="Texture2D" uid="uid://hx3wjergwb8u" path="res://characters/player/textures/tripo_image_ae278d44_0.jpg" id="1_8aq0q"]
-[ext_resource type="Texture2D" uid="uid://d0rvlj0i0a554" path="res://characters/player/textures/tripo_image_ae278d44_2.jpg" id="2_b5mpv"]
+[ext_resource type="Texture2D" uid="uid://d24u077qnikqw" path="res://characters/player/textures/player_d.png" id="1_8aq0q"]
+[ext_resource type="Texture2D" uid="uid://ceysrqs2lfwdi" path="res://characters/player/textures/player_n.png" id="2_b5mpv"]
 
 [resource]
 albedo_texture = ExtResource("1_8aq0q")
+roughness = 0.5
 normal_enabled = true
 normal_texture = ExtResource("2_b5mpv")
