@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ci2jdpl1g0sje"
-path="res://.godot/imported/icon.png-487276ed1e3a0c39cad0279d744ee560.ctex"
+uid="uid://dslbx5ps7ojlm"
+path="res://.godot/imported/blood_splatter.png-d6b9e5cc8020bca4bc6fee315c17360b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icon.png"
-dest_files=["res://.godot/imported/icon.png-487276ed1e3a0c39cad0279d744ee560.ctex"]
+source_file="res://HUD/sprites/blood_splatter.png"
+dest_files=["res://.godot/imported/blood_splatter.png-d6b9e5cc8020bca4bc6fee315c17360b.ctex"]
 
 [params]
 

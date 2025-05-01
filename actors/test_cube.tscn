@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://rq4dvmflav6w"]
-
-[ext_resource type="PackedScene" uid="uid://dhsy6wmf0iv3h" path="res://actors/test_cube.glb" id="1_vwfdk"]
-
-[node name="test_cube" groups=["enemies"] instance=ExtResource("1_vwfdk")]
-
-[node name="Cube" parent="." index="0" groups=["enemies"]]
-
-[node name="StaticBody3D" parent="Cube" index="0" groups=["enemies"]]

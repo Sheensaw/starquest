@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://km6hjfkyboet"]
+[gd_scene load_steps=3 format=3 uid="uid://bd7topi2u5yac"]
 
 [ext_resource type="Texture2D" uid="uid://5neq8msk85ug" path="res://HUD/sprites/joystickkbg.png" id="1_kkvai"]
 [ext_resource type="Texture2D" uid="uid://bwkitok30kelq" path="res://HUD/sprites/joystick.png" id="2_fn8j3"]

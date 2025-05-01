@@ -1,32 +1,45 @@
-[gd_resource type="AnimationNodeStateMachine" load_steps=30 format=3 uid="uid://bh3nnj78l33bd"]
+[gd_resource type="AnimationNodeStateMachine" load_steps=38 format=3 uid="uid://bh3nnj78l33bd"]
 
-[ext_resource type="AnimationNodeBlendSpace2D" uid="uid://lbnqr38p6g0x" path="res://characters/enemies/spider/animations/Move.tres" id="1_tit55"]
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2y8u5"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tit55"]
 animation = &"SpiderAnimations/Attack_01"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_m5qaf"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0yu5g"]
 animation = &"SpiderAnimations/Attack_02"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bugv2"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vjb7m"]
 animation = &"SpiderAnimations/Attack_03"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_f0ywa"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_t6drx"]
 animation = &"SpiderAnimations/Attack_04"
 
-[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_fmhhm"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_2y8u5")
-blend_point_0/pos = 0.0
-blend_point_1/node = SubResource("AnimationNodeAnimation_m5qaf")
-blend_point_1/pos = 1.0
-blend_point_2/node = SubResource("AnimationNodeAnimation_bugv2")
-blend_point_2/pos = 2.0
-blend_point_3/node = SubResource("AnimationNodeAnimation_f0ywa")
-blend_point_3/pos = 3.0
-min_space = 0.0
-max_space = 3.0
-snap = 1.0
-value_label = "attack_index"
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_uoadj"]
+advance_mode = 2
+advance_expression = "attack_substate == 0"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8iv80"]
+advance_mode = 2
+advance_expression = "attack_substate == 1"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_q1klk"]
+advance_mode = 2
+advance_expression = "attack_substate == 2"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ixdyg"]
+advance_mode = 2
+advance_expression = "attack_substate == 3"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_akyum"]
+states/Attack_01/node = SubResource("AnimationNodeAnimation_tit55")
+states/Attack_01/position = Vector2(330, 12)
+states/Attack_02/node = SubResource("AnimationNodeAnimation_0yu5g")
+states/Attack_02/position = Vector2(330, 70)
+states/Attack_03/node = SubResource("AnimationNodeAnimation_vjb7m")
+states/Attack_03/position = Vector2(330, 128)
+states/Attack_04/node = SubResource("AnimationNodeAnimation_t6drx")
+states/Attack_04/position = Vector2(330, 182)
+states/Start/position = Vector2(143, 100)
+transitions = ["Start", "Attack_01", SubResource("AnimationNodeStateMachineTransition_uoadj"), "Start", "Attack_02", SubResource("AnimationNodeStateMachineTransition_8iv80"), "Start", "Attack_03", SubResource("AnimationNodeStateMachineTransition_q1klk"), "Start", "Attack_04", SubResource("AnimationNodeStateMachineTransition_ixdyg")]
+graph_offset = Vector2(-33, -71)
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_e47wc"]
 animation = &"SpiderAnimations/Death_01"
@@ -45,9 +58,6 @@ value_label = "death_index"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fmhhm"]
 animation = &"SpiderAnimations/Idle"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c011x"]
-animation = &"SpiderAnimations/Spawn"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hmggw"]
 animation = &"SpiderAnimations/Stun"
@@ -69,83 +79,102 @@ states/StunStart/node = SubResource("AnimationNodeAnimation_bvd8u")
 states/StunStart/position = Vector2(352, 128)
 transitions = ["Start", "StunStart", SubResource("AnimationNodeStateMachineTransition_im3th"), "StunStart", "StunLoop", SubResource("AnimationNodeStateMachineTransition_373eb")]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6ipwj"]
-advance_mode = 2
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dt5ih"]
+animation = &"SpiderAnimations/WalkForward"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5f0j1"]
-xfade_time = 0.2
-advance_mode = 2
-advance_expression = "!spawned"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6iwt7"]
+animation = &"SpiderAnimations/Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_t4wts"]
+animation = &"SpiderAnimations/WalkRight"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7yc6q"]
+animation = &"SpiderAnimations/WalkLeft"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p2wjy"]
+animation = &"SpiderAnimations/WalkForward"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_p2wjy"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_dt5ih")
+blend_point_0/pos = Vector2(0, 1)
+blend_point_1/node = SubResource("AnimationNodeAnimation_6iwt7")
+blend_point_1/pos = Vector2(0, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_t4wts")
+blend_point_2/pos = Vector2(1, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_7yc6q")
+blend_point_3/pos = Vector2(-1, 0)
+blend_point_4/node = SubResource("AnimationNodeAnimation_p2wjy")
+blend_point_4/pos = Vector2(0, -1)
+snap = Vector2(0.5, 0.5)
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fnpxd"]
 advance_mode = 2
-advance_expression = "moving == true && attacking == false && stun == false && dead == false"
+advance_expression = "moving && !attacking && !stun && !is_dead"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2woxp"]
 advance_mode = 2
-advance_expression = "moving == false"
+advance_expression = "!moving && !attacking && !stun && !is_dead"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xsknm"]
 xfade_time = 0.2
 advance_mode = 2
-advance_expression = "stun == true"
+advance_expression = "stun && !is_dead"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_rcokm"]
 xfade_time = 0.2
 advance_mode = 2
-advance_expression = "stun == true"
+advance_expression = "stun && !is_dead"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_013r8"]
 xfade_time = 0.2
 advance_mode = 2
-advance_expression = "dead == true"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_c011x"]
-xfade_time = 0.2
-advance_mode = 2
-advance_expression = "attacking == true"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2y8u5"]
-xfade_time = 0.2
-break_loop_at_end = true
-advance_mode = 2
-advance_expression = "!attacking and not moving"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_m5qaf"]
-xfade_time = 0.2
-break_loop_at_end = true
-advance_mode = 2
-advance_expression = "!attacking and moving"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bugv2"]
-xfade_time = 0.2
-advance_mode = 2
-advance_expression = "attacking == true"
+advance_expression = "is_dead"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fmhhm"]
 xfade_time = 0.2
 advance_mode = 2
-advance_expression = "dead == true"
+advance_expression = "!stun && is_dead"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_f0ywa"]
 xfade_time = 0.2
 advance_mode = 2
-advance_expression = "current_health <= 0"
+advance_expression = "is_dead"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_p2wjy"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tit55"]
+advance_mode = 2
+advance_expression = "!attacking && !stun && !is_dead"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0yu5g"]
+advance_mode = 2
+advance_expression = "stun && !is_dead"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vjb7m"]
+advance_mode = 2
+advance_expression = "is_dead"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_t6drx"]
+advance_mode = 2
+advance_expression = "attacking && !stun && !is_dead"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_akyum"]
+advance_mode = 2
+advance_expression = "attacking && !stun && !is_dead"
 
 [resource]
-states/Attack/node = SubResource("AnimationNodeBlendSpace1D_fmhhm")
-states/Attack/position = Vector2(506, -81)
+states/Attack/node = SubResource("AnimationNodeStateMachine_akyum")
+states/Attack/position = Vector2(524, -107)
 states/Death/node = SubResource("AnimationNodeBlendSpace1D_u606p")
 states/Death/position = Vector2(420, 162)
 states/End/position = Vector2(815, 23)
 states/Idle/node = SubResource("AnimationNodeAnimation_fmhhm")
 states/Idle/position = Vector2(420, 23)
-states/Spawn/node = SubResource("AnimationNodeAnimation_c011x")
-states/Spawn/position = Vector2(302, 23)
-states/Start/position = Vector2(185, 23)
+states/Start/position = Vector2(321, 23)
 states/Stun/node = SubResource("AnimationNodeStateMachine_vgya2")
 states/Stun/position = Vector2(633, 162)
-states/Walk/node = ExtResource("1_tit55")
+states/Walk/node = SubResource("AnimationNodeBlendSpace2D_p2wjy")
 states/Walk/position = Vector2(633, 23)
-transitions = ["Start", "Spawn", SubResource("AnimationNodeStateMachineTransition_6ipwj"), "Spawn", "Idle", SubResource("AnimationNodeStateMachineTransition_5f0j1"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_fnpxd"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_2woxp"), "Walk", "Stun", SubResource("AnimationNodeStateMachineTransition_xsknm"), "Idle", "Stun", SubResource("AnimationNodeStateMachineTransition_rcokm"), "Idle", "Death", SubResource("AnimationNodeStateMachineTransition_013r8"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_c011x"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_2y8u5"), "Attack", "Walk", SubResource("AnimationNodeStateMachineTransition_m5qaf"), "Walk", "Attack", SubResource("AnimationNodeStateMachineTransition_bugv2"), "Stun", "Death", SubResource("AnimationNodeStateMachineTransition_fmhhm"), "Walk", "Death", SubResource("AnimationNodeStateMachineTransition_f0ywa")]
-graph_offset = Vector2(27, -30)
+transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_fnpxd"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_2woxp"), "Walk", "Stun", SubResource("AnimationNodeStateMachineTransition_xsknm"), "Idle", "Stun", SubResource("AnimationNodeStateMachineTransition_rcokm"), "Idle", "Death", SubResource("AnimationNodeStateMachineTransition_013r8"), "Stun", "Death", SubResource("AnimationNodeStateMachineTransition_fmhhm"), "Walk", "Death", SubResource("AnimationNodeStateMachineTransition_f0ywa"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_p2wjy"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_tit55"), "Attack", "Stun", SubResource("AnimationNodeStateMachineTransition_0yu5g"), "Attack", "Death", SubResource("AnimationNodeStateMachineTransition_vjb7m"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_t6drx"), "Walk", "Attack", SubResource("AnimationNodeStateMachineTransition_akyum")]
+graph_offset = Vector2(99, -127)

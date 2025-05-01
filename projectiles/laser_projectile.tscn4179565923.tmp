@@ -13,7 +13,6 @@ script = ExtResource("1_c7er8")
 min_damage = 5.0
 max_damage = 8.0
 points_per_hit = 1
-vertical_homing_lerp = 0.0
 is_player_laser = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

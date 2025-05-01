@@ -4,49 +4,52 @@ class_name GameManager
 # Constantes
 const TARGET_SCN: PackedScene = preload("res://HUD/sprites/TargetSprite.tscn")
 const TAKEDOWN_SCN: PackedScene = preload("res://HUD/sprites/TakedownSprite.tscn")
+const DEFAULT_TEXTURE: Texture2D = preload("res://HUD/sprites/default_texture.png")  # Texture par défaut importée
 
 # Variables exportées
 @export var rotation_speed: float = 2.0  # Vitesse de rotation (rad/s)
 @export var follow_lerp: float = 0.25    # Lissage du sprite
 
-# Variables runtime
-var player: CharacterBody3D
-var camera_rig: Node3D
-var target_sprite: Sprite3D  # Sprite de cible (rouge/vert)
-var takedown_sprite: Sprite3D  # Sprite de takedown (bleu)
+# Variables avec références directes
+@onready var player = get_tree().get_first_node_in_group("player")
+@onready var camera_rig: Node3D = $"/root/Aridia/CameraRig"
+@onready var target_sprite: Sprite3D = _find_or_create_sprite("TargetSprite", TARGET_SCN)
+@onready var takedown_sprite: Sprite3D = _find_or_create_sprite("TakedownSprite", TAKEDOWN_SCN)
 
 func _ready() -> void:
 	set_physics_process(false)
 	call_deferred("_late_init")
 
 func _late_init() -> void:
-	player = _first("player")
-	camera_rig = _first("camera_rig")
-	target_sprite = _find_sprite("TargetSprite")
-	takedown_sprite = _find_sprite("TakedownSprite")
-	if target_sprite == null:
-		target_sprite = _safe_instance(TARGET_SCN, "TargetSprite")
-	if takedown_sprite == null:
-		takedown_sprite = _safe_instance(TAKEDOWN_SCN, "TakedownSprite")
-	if takedown_sprite and "billboard_mode" in takedown_sprite:
+	# Vérification des références
+	if not player or not camera_rig:
+		push_error("Player ou CameraRig non trouvé. Vérifie les chemins.")
+		return
+	
+	# Configuration initiale des sprites
+	if takedown_sprite and "billboard_mode" in takedown_sprite:  # Vérification ajoutée
 		takedown_sprite.billboard_mode = 1
-	_init_sprite(target_sprite)
-	_init_sprite(takedown_sprite, Color(0.2, 0.6, 1.0))
-	if camera_rig and player and camera_rig.has_method("set_follow_target"):
+	_init_sprite(target_sprite, Color(1, 0, 0, 1))  # Rouge par défaut
+	_init_sprite(takedown_sprite, Color(0.2, 0.6, 1.0))  # Bleu
+	
+	# Configuration de la caméra
+	if camera_rig.has_method("set_follow_target"):
 		camera_rig.set_follow_target(player)
+	
 	set_physics_process(true)
 
 func _physics_process(dt: float) -> void:
-	if not player or not is_instance_valid(player):
-		player = _first("player")
-	if not player:
+	if not is_instance_valid(player):
+		push_error("Player invalide.")
 		return
 	_update_target_sprite(dt)
 	_update_takedown_sprite(dt)
 
-func _first(group_name: String) -> Node:
-	var nodes = get_tree().get_nodes_in_group(group_name)
-	return nodes[0] if nodes else null
+func _find_or_create_sprite(group_name: String, scene: PackedScene) -> Sprite3D:
+	var sprite = _find_sprite(group_name)
+	if not sprite:
+		sprite = _safe_instance(scene, group_name)
+	return sprite
 
 func _find_sprite(group_name: String) -> Sprite3D:
 	for n in get_tree().get_nodes_in_group(group_name):
@@ -55,35 +58,33 @@ func _find_sprite(group_name: String) -> Sprite3D:
 	return null
 
 func _safe_instance(scene: PackedScene, group_name: String) -> Sprite3D:
-	if scene == null:
-		push_error("%s: PackedScene not found." % group_name)
+	if not scene:
+		push_error("%s: PackedScene non défini." % group_name)
 		return null
 	var inst = scene.instantiate()
-	if inst == null:
-		push_error("%s: instantiation failed." % group_name)
+	if not inst:
+		push_error("%s: Échec de l’instanciation." % group_name)
 		return null
-	if inst is Sprite3D:
-		get_tree().current_scene.add_child(inst)
-		inst.add_to_group(group_name)
-		return inst
-	else:
-		push_error("%s scene is not a Sprite3D." % group_name)
+	if not inst is Sprite3D:
+		push_error("%s: L’instance n’est pas un Sprite3D." % group_name)
+		inst.queue_free()
 		return null
+	get_tree().current_scene.add_child(inst)
+	inst.add_to_group(group_name)
+	return inst
 
-func _init_sprite(s: Sprite3D, col: Color = Color.WHITE) -> void:
-	if s == null: return
-	if not s.texture:
-		var img := Image.new()
-		img.create(32, 32, false, Image.FORMAT_RGBA8)
-		img.fill(Color.WHITE)
-		s.texture = ImageTexture.create_from_image(img)
+func _init_sprite(s: Sprite3D, col: Color) -> void:
+	if not s:
+		return
+	s.texture = DEFAULT_TEXTURE if not s.texture else s.texture
 	s.modulate = col
 	s.pixel_size = 0.015
 	s.scale = Vector3.ONE * 1.5
 	s.visible = false
 
 func _update_target_sprite(dt: float) -> void:
-	if target_sprite == null: return
+	if not target_sprite:
+		return
 	var tgt: Node3D = player.get_detected_target()
 	if tgt and is_instance_valid(tgt):
 		target_sprite.visible = true
@@ -93,7 +94,8 @@ func _update_target_sprite(dt: float) -> void:
 		target_sprite.visible = false
 
 func _update_takedown_sprite(dt: float) -> void:
-	if takedown_sprite == null: return
+	if not takedown_sprite:
+		return
 	var stunned_enemy: Node3D = null
 	for e in get_tree().get_nodes_in_group("enemies"):
 		if e.has_method("is_stunned") and e.is_stunned():
@@ -129,8 +131,9 @@ func _adapt_scale(s: Sprite3D, ent: Node3D) -> void:
 
 func _ground_pos(ent: Node3D) -> Vector3:
 	if ent.has_node("GroundRay"):
-		var ray: RayCast3D = ent.get_node("GroundRay")
-		ray.force_raycast_update()
-		if ray.is_colliding():
-			return ray.get_collision_point()
+		var ray = ent.get_node("GroundRay")
+		if ray is RayCast3D:
+			ray.force_raycast_update()
+			if ray.is_colliding():
+				return ray.get_collision_point()
 	return ent.global_position

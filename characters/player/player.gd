@@ -10,6 +10,7 @@ extends CharacterBody3D
 @export var detection_radius  : float = 20.0
 @export var cone_angle        : float = 45.0      # °
 @export var max_health        : float = 100.0
+@export var fire_rate         : float = 0.1       # s (intervalle entre tirs)
 @export var detectable_groups : PackedStringArray = ["aimables", "enemies"]
 
 #────────────────────────────────────────────────────────────
@@ -27,7 +28,6 @@ const STRAFE_TOP      = "StrafeTop"
 const STRAFE_DOWN     = "StrafeDown"
 
 const STRAFE_EXIT_DELAY : float = 0.1   # s
-const SHOOT_INTERVAL    : float = 0.1   # s
 
 #────────────────────────────────────────────────────────────
 #  RÉFÉRENCES DE SCÈNE & CONTROLES UI
@@ -149,7 +149,7 @@ func _physics_process(delta: float) -> void:
 		shoot_timer = 0.0
 	if not can_shoot:
 		shoot_timer += delta
-		if shoot_timer >= SHOOT_INTERVAL:
+		if shoot_timer >= fire_rate:
 			can_shoot = true
 
 	_update_animations(strafing)

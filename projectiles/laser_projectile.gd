@@ -1,27 +1,36 @@
 extends Area3D
 
 # Variables exportées
-@export var speed: float = 60.0
-@export var min_damage: float = 10.0
-@export var max_damage: float = 20.0
-@export var points_per_hit: int = 5
-@export var shoot_sound: AudioStream = preload("res://audio/sfx/laser_shoot.wav")
-@export var vertical_homing_lerp: float = 0.25
-@export_range(1, 5, 1) var sub_steps: int = 2
+@export var speed: float = 60.0  # Vitesse du laser
+@export var min_damage: float = 10.0  # Dégâts minimum
+@export var max_damage: float = 20.0  # Dégâts maximum
+@export var points_per_hit: int = 5  # Points attribués par coup (pour le joueur)
+@export var shoot_sound: AudioStream = preload("res://audio/sfx/laser_shoot.wav")  # Son du tir
+@export var vertical_homing_lerp: float = 0.25  # Lissage du homing vertical (0 pour désactiver)
+@export_range(1, 5, 1) var sub_steps: int = 2  # Nombre de sous-étapes par frame
+@export var is_player_laser: bool = true  # Indique si le laser est tiré par le joueur
 
 # Variables runtime
-var direction: Vector3 = Vector3.FORWARD
-var damage: float
-var lifetime: float = 5.0
-var time_alive: float = 0.0
-var initial_position: Vector3
-var audio_player: AudioStreamPlayer3D
-var target_ref: Node3D = null
+var direction: Vector3 = Vector3.FORWARD  # Direction initiale
+var damage: float  # Dégâts calculés
+var lifetime: float = 5.0  # Durée de vie en secondes
+var time_alive: float = 0.0  # Temps écoulé
+var initial_position: Vector3  # Position de départ
+var audio_player: AudioStreamPlayer3D  # Lecteur audio pour le son du tir
+var target_ref: Node3D = null  # Cible pour le homing
+
+# Fonction d'initialisation
+func initialize(is_player: bool, target: Node3D = null) -> void:
+	is_player_laser = is_player
+	target_ref = target
+	if is_player_laser:
+		add_to_group("player_projectiles")
+	else:
+		add_to_group("enemy_projectiles")
 
 func _ready() -> void:
 	damage = randf_range(min_damage, max_damage)
 	initial_position = global_position
-	add_to_group("player_projectiles")
 	connect("body_entered", Callable(self, "_on_body_entered"))
 	audio_player = get_node_or_null("AudioStreamPlayer3D") as AudioStreamPlayer3D
 	if audio_player == null:
@@ -58,16 +67,26 @@ func _check_lifetime() -> bool:
 	return false
 
 func _on_body_entered(body: Node) -> void:
-	if not body is PhysicsBody3D or not body.is_in_group("enemies"):
+	if not body is PhysicsBody3D:
 		return
-	if body.has_method("is_stunned") and body.has_method("is_dead"):
-		if body.is_stunned() or body.is_dead():
+	if is_player_laser:
+		if not body.is_in_group("enemies"):
 			return
-	if body.has_method("take_damage"):
-		body.take_damage(damage, self)
-		var players := get_tree().get_nodes_in_group("player")
-		if players.size() > 0 and players[0].has_method("add_score"):
-			players[0].add_score(points_per_hit)
+		if body.has_method("is_stunned") and body.has_method("is_dead"):
+			if body.is_stunned() or body.is_dead():
+				return
+		if body.has_method("take_damage"):
+			body.take_damage(damage, self)
+			var players := get_tree().get_nodes_in_group("player")
+			if players.size() > 0 and players[0].has_method("add_score"):
+				players[0].add_score(points_per_hit)
+	else:
+		if not body.is_in_group("player"):
+			return
+		if body.has_method("take_damage"):
+			body.take_damage(damage, self)  # Déjà correct avec deux arguments
+	
+	# Gestion du son à l'impact
 	audio_player.get_parent().remove_child(audio_player)
 	get_tree().root.add_child(audio_player)
 	audio_player.global_transform = global_transform
@@ -78,4 +97,4 @@ func _on_body_entered(body: Node) -> void:
 	get_tree().root.add_child(audio_timer)
 	audio_timer.connect("timeout", Callable(audio_player, "queue_free"))
 	audio_timer.start()
-	queue_free()
+	queue_free()  # Destruction immédiate pour éviter les rebonds
