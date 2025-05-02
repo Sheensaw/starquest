@@ -8,6 +8,8 @@ signal shoot_released()
 @onready var shoot_button: Button = $PlayerHUD/ShootButton
 
 func _ready() -> void:
+	print("InputHandler - Joystick initialisé :", joystick)
+	print("InputHandler - ShootButton initialisé :", shoot_button)
 	if shoot_button:
 		shoot_button.pressed.connect(_on_shoot_pressed)
 		shoot_button.released.connect(_on_shoot_released)
@@ -16,8 +18,10 @@ func _process(delta: float) -> void:
 	var direction: Vector2 = Vector2.ZERO
 	if joystick and joystick.direction != Vector2.ZERO:
 		direction = joystick.direction
+		print("InputHandler - Direction du joystick :", direction)
 	else:
 		direction = Input.get_vector("MoveLeft", "MoveRight", "MoveTop", "MoveDown")
+		print("InputHandler - Direction du clavier :", direction)
 	emit_signal("move_direction_changed", direction)
 
 	if Input.is_action_just_pressed("Shoot"):

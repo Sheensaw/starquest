@@ -1,11 +1,40 @@
-[gd_scene load_steps=6 format=3 uid="uid://conhddaoqon6o"]
+[gd_scene load_steps=6 format=3 uid="uid://dojytk3msb482"]
 
-[ext_resource type="Script" uid="uid://c0et2xheyrv8c" path="res://projectiles/laser_projectile.gd" id="1_1lp8l"]
-[ext_resource type="Shader" uid="uid://ry88oxa2rmu7" path="res://projectiles/enemy_laser_projectile.gdshader" id="2_1lp8l"]
+[ext_resource type="Script" uid="uid://c0et2xheyrv8c" path="res://projectiles/LaserProjectile.gd" id="1_1lp8l"]
+
+[sub_resource type="Shader" id="Shader_vnu1v"]
+code = "shader_type spatial;
+render_mode unshaded;
+
+uniform vec4 core_color = vec4(1.0, 1.0, 1.0, 1.0);   // Couleur du noyau (blanc brillant)
+uniform vec4 glow_color = vec4(0.0, 1.0, 0.0, 1.0);   // Couleur de la lueur (rouge)
+uniform float intensity = 10.0;  // Intensité globale de la lueur
+uniform float core_width = 0.1; // Largeur du noyau blanc
+uniform float glow_width = 0.4; // Largeur de la lueur rouge (plus large que le noyau)
+
+void fragment() {
+    vec2 uv = UV - 0.5;  // Centrer les coordonnées UV
+    float dist = length(uv);  // Distance du centre
+
+    // Dégradé pour la lueur rouge (plus large)
+    float glow_alpha = smoothstep(glow_width, 0.0, dist);
+    
+    // Dégradé pour le noyau blanc (plus étroit)
+    float core_alpha = smoothstep(core_width, -0.2, dist);
+    
+    // Mélanger les couleurs
+    vec3 final_color = mix(glow_color.rgb, core_color.rgb, core_alpha);
+    
+    // Appliquer l'intensité et l'alpha
+    final_color *= intensity * glow_alpha;
+    
+    ALBEDO = final_color;
+    ALPHA = glow_alpha;
+}"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1lp8l"]
 render_priority = 0
-shader = ExtResource("2_1lp8l")
+shader = SubResource("Shader_vnu1v")
 shader_parameter/core_color = Vector4(1, 1, 1, 1)
 shader_parameter/glow_color = Vector4(0, 1, 0, 1)
 shader_parameter/intensity = 10.0

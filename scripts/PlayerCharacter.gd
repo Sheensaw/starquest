@@ -24,7 +24,7 @@ var strafe_exit_timer: float = 0.0
 var locked_target: Node3D = null
 var current_health: float
 var score: int = 0
-var is_dead: bool = false  # Ajout de la propriété is_dead
+var is_dead: bool = false
 
 var can_shoot: bool = true
 var shoot_timer: float = 0.0
@@ -35,16 +35,22 @@ var is_shooting: bool = false
 var projectile_scene: PackedScene = preload("res://projectiles/laser_projectile.tscn")
 
 func _ready() -> void:
+	print("PlayerCharacter - InputHandler :", input_handler)
 	add_to_group("player")
 	current_health = max_health
 	emit_signal("health_changed", current_health, max_health)
 	emit_signal("score_changed", score)
 
-	input_handler.move_direction_changed.connect(_on_move_direction_changed)
-	input_handler.shoot_pressed.connect(_on_shoot_pressed)
-	input_handler.shoot_released.connect(_on_shoot_released)
+	if input_handler:
+		print("Connexion des signaux de l’InputHandler")
+		input_handler.move_direction_changed.connect(_on_move_direction_changed)
+		input_handler.shoot_pressed.connect(_on_shoot_pressed)
+		input_handler.shoot_released.connect(_on_shoot_released)
+	else:
+		print("ERREUR : InputHandler non trouvé ! Vérifiez la scène.")
 
 func _on_move_direction_changed(direction: Vector2) -> void:
+	print("PlayerCharacter - Direction reçue :", direction)
 	input_direction = direction
 
 func _on_shoot_pressed() -> void:
@@ -54,16 +60,15 @@ func _on_shoot_released() -> void:
 	is_shooting = false
 
 func _physics_process(delta: float) -> void:
+	print("PlayerCharacter - Direction d'entrée actuelle :", input_direction)
 	var shoot_pressed = is_shooting
 	var detected = targeting_system.get_detected_target()
 
-	# Mettre à jour locked_target à chaque frame pour le target_sprite
 	if detected and not targeting_system._is_invalid_enemy(detected):
 		locked_target = detected
 	else:
 		locked_target = null
 
-	# Strafing uniquement pendant le tir
 	strafing = shoot_pressed
 
 	var input_vec2: Vector2 = input_direction
@@ -72,13 +77,11 @@ func _physics_process(delta: float) -> void:
 
 	var rot_spd = 100.0 if strafing and locked_target else rotation_speed
 
-	# Rotation automatique vers la cible uniquement pendant le tir
 	if shoot_pressed and locked_target:
 		var target_dir = (locked_target.global_position - global_position).normalized()
 		locked_yaw = atan2(target_dir.x, target_dir.z) + PI
 		rotation.y = lerp_angle(rotation.y, locked_yaw, rot_spd * delta)
 	elif not shoot_pressed and dir3.length_squared() > 0.0:
-		# Rotation basée sur le mouvement hors tir
 		var target_yaw = atan2(dir3.x, dir3.z) + PI
 		rotation.y = lerp_angle(rotation.y, target_yaw, rot_spd * delta)
 
@@ -124,7 +127,7 @@ func take_damage(dmg: float, source: Node) -> void:
 	current_health = clamp(current_health - dmg, 0.0, max_health)
 	emit_signal("health_changed", current_health, max_health)
 	if current_health <= 0.0:
-		is_dead = true  # Met à jour la propriété is_dead
+		is_dead = true
 		queue_free()
 
 func recover_health(amount: float) -> void:

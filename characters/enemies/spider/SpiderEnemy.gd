@@ -12,24 +12,24 @@ class_name SpiderEnemy
 @export var impact_scale_factor: float = 1.5
 @export var impact_animation_duration: float = 0.2
 @export var hit_duration: float = 0.2
-@export var hit_flash_speed: float = 20.0  # Vitesse de clignotement rouge (impact)
-@export var stun_flash_speed: float = 5.0  # Vitesse de clignotement blanc (stun)
+@export var hit_flash_speed: float = 20.0
+@export var stun_flash_speed: float = 5.0
 
 # --- Références ---
-@onready var player          = get_tree().get_first_node_in_group("player")
-@onready var anim_tree       = $AnimationTree
-@onready var anim_state      = anim_tree.get("parameters/playback") if anim_tree else null
+@onready var player = get_tree().get_first_node_in_group("player")
+@onready var anim_tree = $AnimationTree
+@onready var anim_state = anim_tree.get("parameters/playback") if anim_tree else null
 @onready var collision_shape = $CollisionShape3D
-@onready var health_label    = $HealthLabel
-@onready var ground_ray      = $GroundRay
+@onready var health_label = $HealthLabel
+@onready var ground_ray = $GroundRay
 @onready var animation_player = $AnimationPlayer
 @onready var takedown_sprite = $TakedownSprite
 
 # --- États internes ---
-var moving: bool       = false
-var attacking: bool    = false
-var stun: bool         = false
-var can_attack: bool   = true
+var moving: bool = false
+var attacking: bool = false
+var stun: bool = false
+var can_attack: bool = true
 var blend_position: Vector2 = Vector2.ZERO
 var current_normal: Vector3 = Vector3.UP
 var takedown_performed: bool = false
@@ -38,9 +38,6 @@ var hit_timer: float = 0.0
 var stun_flash_timer: float = 0.0
 var is_hit_active: bool = false
 var is_stunned_active: bool = false
-
-# --- Liste des animations d'attaque ---
-var attack_animations: Array = ["SpiderAnimations/Attack_01", "SpiderAnimations/Attack_02", "SpiderAnimations/Attack_03", "SpiderAnimations/Attack_04"]
 
 # --- Timers ---
 var attack_timer: Timer
@@ -54,14 +51,14 @@ func _ready() -> void:
 	super._ready()
 	health = max_health
 
-	# Vérification de l'AnimationTree
 	if not anim_tree:
-		print("ERREUR : AnimationTree non trouvé ! Vérifie le chemin dans la scène.")
+		print("ERREUR : AnimationTree non trouvé !")
 		return
+
 	anim_tree.active = true
 	anim_state = anim_tree.get("parameters/playback")
 	if not anim_state:
-		print("ERREUR : AnimationNodeStateMachinePlayback non trouvé ! Vérifie la configuration.")
+		print("ERREUR : AnimationNodeStateMachinePlayback non trouvé !")
 		return
 
 	attack_timer = Timer.new()
@@ -110,7 +107,6 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector3.ZERO
 		return
 
-	# Mise à jour des timers pour le clignotement
 	if hit_timer > 0:
 		hit_timer -= delta
 		is_hit_active = hit_timer > 0
@@ -124,24 +120,20 @@ func _physics_process(delta: float) -> void:
 		is_stunned_active = false
 		stun_flash_timer = 0.0
 
-	# Gérer la visibilité et l'animation du TakedownSprite
 	if takedown_sprite:
 		takedown_sprite.visible = stun
 		if stun and not takedown_sprite.is_playing():
 			takedown_sprite.play("stunned")
 
-	# Vérification de l'état du joueur
 	if not player or not is_instance_valid(player) or player.is_dead:
 		moving = false
 		velocity = Vector3.ZERO
 		update_animation()
 		return
 
-	# Calcul de la direction et de la distance au joueur
 	var direction = (player.global_position - global_position).normalized()
 	var dist = global_position.distance_to(player.global_position)
 
-	# Décision de l'IA : déplacement ou attaque
 	if stun:
 		velocity = Vector3.ZERO
 	elif dist <= attack_range and can_attack and not attacking:
@@ -149,10 +141,8 @@ func _physics_process(delta: float) -> void:
 	else:
 		if dist > attack_range:
 			moving = true
-			# Rotation fluide vers le joueur, ajustée pour que l'axe -Z (avant) pointe vers le joueur
 			var target_yaw = atan2(direction.x, direction.z) + PI
 			rotation.y = lerp_angle(rotation.y, target_yaw, rotation_lerp_speed * delta)
-			# Déplacement vers le joueur
 			velocity.x = direction.x * speed
 			velocity.z = direction.z * speed
 		else:
@@ -160,22 +150,15 @@ func _physics_process(delta: float) -> void:
 			velocity.x = 0
 			velocity.z = 0
 
-	# Appliquer la gravité
 	apply_gravity(delta)
-
-	# Ajuster au terrain
 	adjust_to_terrain(delta)
-
-	# Mettre à jour l'animation et le blend position
 	update_blend_position()
 	update_animation()
 
-	# Mettre à jour l'affichage de la santé
 	if health_label and health_label.visible:
 		_face_camera(health_label)
 		health_label.text = str(int(health))
 
-	# Appliquer le mouvement
 	move_and_slide()
 
 # --- Fonctions utilitaires ---
@@ -189,27 +172,13 @@ func start_attack() -> void:
 	attacking = true
 	can_attack = false
 
-	# Sélectionne une animation d'attaque aléatoire
-	var attack_anim = attack_animations[randi() % attack_animations.size()]
-	print("Debug: Début de l'attaque, animation sélectionnée = ", attack_anim)
-
-	if anim_state:
-		anim_state.travel("Attack")  # Transition vers l'état Attack
-		await get_tree().create_timer(0.01).timeout
-		var current_state = anim_state.get_current_node()
-		print("Debug: Animation jouée ? État actuel = ", current_state)
-
-	# Joue l'animation directement via l'AnimationPlayer
-	if animation_player and animation_player.has_animation(attack_anim):
-		animation_player.play(attack_anim)
-		print("Debug: Animation ", attack_anim, " jouée via AnimationPlayer.")
-	else:
-		print("Debug: ERREUR : Animation ", attack_anim, " non trouvée dans AnimationPlayer.")
+	var attack_index = randi() % 4
+	anim_tree.set("parameters/Attack/AttackBlendspace/attack_index", float(attack_index))
+	anim_state.travel("Attack")
 
 	if player and is_instance_valid(player):
 		player.take_damage(10, self)
 
-	# Lancer le timer de cooldown
 	attack_timer.start()
 
 func _on_attack_timer_timeout() -> void:

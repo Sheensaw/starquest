@@ -12,54 +12,51 @@ var _default_center: Vector2            # Default center when not active
 @onready var knob: TextureRect = $JoyKnob
 
 func _ready() -> void:
-	# Initialize joystick appearance and center
-	modulate.a = 0.5            # Semi-transparent when idle
-	knob.hide()                 # Hide knob until interaction
-	_default_center = size * 0.5  # Default center based on control size
-	_center = _default_center     # Initialize center
-	bg.position = _center - bg.size / 2  # Center background initially
+	print("VirtualJoystick - Initialisation")
+	print("JoyBg :", bg)
+	print("JoyKnob :", knob)
+	modulate.a = 0.5
+	knob.hide()
+	_default_center = size * 0.5
+	_center = _default_center
+	bg.position = _center - bg.size / 2
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
 		if event.pressed and _touch_id < 0:
-			# Calculate local position from global touch position
 			var local_pos = event.position - global_position
-			# Restrict dynamic positioning to within dynamic_radius of default center
+			print("Touch pressed at global position:", event.position, " | Local position:", local_pos)
 			if local_pos.distance_to(_default_center) <= dynamic_radius:
 				_touch_id = event.index
-				_center = local_pos  # Move joystick center to touch point
+				_center = local_pos
 				direction = Vector2.ZERO
-				# Center the knob and background at the new center
 				knob.position = _center - knob.size / 2
 				bg.position = _center - bg.size / 2
 				knob.show()
-				_tween_opacity(1.0)    # Smoothly transition to fully opaque
+				_tween_opacity(1.0)
 		elif not event.pressed and event.index == _touch_id:
+			print("Touch released, resetting joystick")
 			_reset()
 	elif event is InputEventScreenDrag and event.index == _touch_id:
-		# Calculate local position from global drag position
 		var local_pos = event.position - global_position
 		var delta = local_pos - _center
-		# Clamp delta within the radius
+		print("Drag event - Local position:", local_pos, " | Delta:", delta)
 		if delta.length() > radius:
 			delta = delta.normalized() * radius
-		# Apply dead zone
 		if delta.length() < dead_zone:
 			delta = Vector2.ZERO
 			direction = Vector2.ZERO
 		else:
-			# Scale direction to account for dead zone
 			direction = (delta - delta.normalized() * dead_zone) / (radius - dead_zone)
 			direction = direction.clamp(Vector2(-1, -1), Vector2(1, 1))
-		# Position knob's center at _center + delta
+		print("Direction calculée:", direction)
 		knob.position = _center + delta - knob.size / 2
 
 func _reset() -> void:
 	_touch_id = -1
 	direction = Vector2.ZERO
 	knob.hide()
-	_tween_opacity(0.5)    # Smoothly transition to semi-transparent
-	# Reset to default center
+	_tween_opacity(0.5)
 	_center = _default_center
 	knob.position = _center - knob.size / 2
 	bg.position = _center - bg.size / 2
